@@ -24,6 +24,28 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        /* Force Product Items to stack context */
+        .product-item {
+            position: relative !important;
+            z-index: 1 !important;
+        }
+
+        /* Ensure buttons are reachable and show pointer */
+        .add-to-cart {
+            position: relative !important;
+            z-index: 100 !important;
+            cursor: pointer !important;
+            pointer-events: auto !important;
+        }
+
+        /* Ensure no overlay blocks it */
+        .portfolio-item::after,
+        .portfolio-item::before {
+            pointer-events: none !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -125,18 +147,26 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 text-center">
+                <div class="col-12 text-left">
                     <ul class="list-inline mb-4 pb-2" id="portfolio-flters">
                         <li class="btn btn-sm btn-outline-primary m-1 active" data-filter="*">All</li>
                         <li class="btn btn-sm btn-outline-primary m-1" data-filter=".first">Tradicional</li>
                         <li class="btn btn-sm btn-outline-primary m-1" data-filter=".second">Refrescante</li>
                         <li class="btn btn-sm btn-outline-primary m-1" data-filter=".third">Elite</li>
                         <li class="btn btn-sm btn-outline-primary m-1" data-filter=".fourth">Premium</li>
-                        <li class="btn btn-sm btn-outline-primary m-1" data-filter=".fifth">Signature</li>
+                        <!-- <li class="btn btn-sm btn-outline-primary m-1" data-filter=".fifth">Signature</li> -->
                     </ul>
                 </div>
             </div>
             <div class="row portfolio-container">
+                <div class="col-lg-12 portfolio-item first mb-4">
+                    <div class="row">
+                        <div class="col-12 text-left">
+                            <h4 class="section-title position-relative mb-3">Clasico</h4>
+                            <h5 class="text-muted">Base Láctea</h5>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item first">
                     <div
                         class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
@@ -151,8 +181,10 @@
                         <h5 class="font-weight-bold mb-4">Fresas del Huerto</h5>
                         <p class="m-0 mb-4">Fresas maduras, crema suave y el recuerdo de días que todavía sonríen en la
                             memoria.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="1.1" data-name="Fresas del Huerto"
-                            data-price="4000" data-image="img/Product/Tradicional/Fresas.jpg">Add to Cart</button>
+                        <button class="btn btn-sm btn-secondary add-to-cart"
+                            onclick="alert('Click verified'); addToCart(this)" data-id="1.1"
+                            data-name="Fresas del Huerto" data-price="4000"
+                            data-image="img/Product/Tradicional/Fresas.jpg">Add to Cart</button>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item first">
@@ -168,7 +200,7 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Ron con Pasas sultanicas</h5>
                         <p class="m-0 mb-4">Caribe eterno en cada cucharada ronca.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="1.2"
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="1.2"
                             data-name="Ron con Pasas sultanicas" data-price="4000"
                             data-image="img/Product/Tradicional/Ron.jpg">Add to Cart</button>
                     </div>
@@ -186,8 +218,9 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Galleta Oreo Crunch</h5>
                         <p class="m-0 mb-4">Infancia crujiente en crema oscura</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="1.3" data-name="Galleta Oreo Crunch"
-                            data-price="4000" data-image="img/Product/Tradicional/oreo.jpeg">Add to
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="1.3"
+                            data-name="Galleta Oreo Crunch" data-price="4000"
+                            data-image="img/Product/Tradicional/oreo.jpeg">Add to
                             Cart</button>
                     </div>
                 </div>
@@ -204,7 +237,7 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Manjar de Maní Criollo</h5>
                         <p class="m-0 mb-4">Abrazo intenso de sabor y tradición.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="1.4"
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="1.4"
                             data-name="Manjar de Maní Criollo" data-price="4000"
                             data-image="img/Product/Tradicional/mani.png">Add to Cart</button>
                     </div>
@@ -223,8 +256,9 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Mora Yogur Natural</h5>
                         <p class="m-0 mb-4">Bosque saludable en yogurt cremoso.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="1.5" data-name="Mora Yogur Natural"
-                            data-price="4000" data-image="img/Product/Tradicional/mora.jpg">Add to Cart</button>
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="1.5"
+                            data-name="Mora Yogur Natural" data-price="4000"
+                            data-image="img/Product/Tradicional/mora.jpg">Add to Cart</button>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item first">
@@ -240,8 +274,9 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Napolitano</h5>
                         <p class="m-0 mb-4">Trío legendario de Italia helada.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="1.6" data-name="Napolitano"
-                            data-price="4000" data-image="img/Product/Tradicional/napolitano.jpg">Add to Cart</button>
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="1.6"
+                            data-name="Napolitano" data-price="4000"
+                            data-image="img/Product/Tradicional/napolitano.jpg">Add to Cart</button>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item first">
@@ -257,12 +292,12 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Queso y Bocadillo Veleño</h5>
                         <p class="m-0 mb-4">Orgullo veleño en helado perfecto.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="1.7" data-name="Queso"
-                            data-price="4000" data-image="img/Product/Tradicional/queso.jpg">Add to
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="1.7"
+                            data-name="Queso" data-price="4000" data-image="img/Product/Tradicional/queso.jpg">Add to
                             Cart</button>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item fourth">
+                <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item first">
                     <div
                         class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
                         <div class="bg-primary mt-n5 py-3" style="width: 80px;">
@@ -275,8 +310,35 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Choco Menta Andina</h5>
                         <p class="m-0 mb-4">Refrescante montaña helada con fuego chocolatoso.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="1.8" data-name="Choco Menta Andina"
-                            data-price="4000" data-image="img/Product/Tradicional/choco-menta.png">Add to Cart</button>
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="1.8"
+                            data-name="Choco Menta Andina" data-price="4000"
+                            data-image="img/Product/Tradicional/choco-menta.png">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item first">
+                    <div
+                        class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
+                        <div class="bg-primary mt-n5 py-3" style="width: 80px;">
+                            <h4 class="font-weight-bold text-oliva mb-0">$8.000</h4>
+                        </div>
+                        <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3"
+                            style="width: 150px; height: 150px;">
+                            <img class="rounded-circle w-100 h-100" src="img/Product/Tradicional/coco.png"
+                                style="object-fit: cover;">
+                        </div>
+                        <h5 class="font-weight-bold mb-4">Coco del Pacífico Puro</h5>
+                        <p class="m-0 mb-4">Paraíso pacífico en cono helado.</p>
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="1.9"
+                            data-name="Coco del Pacífico Puro" data-price="4000"
+                            data-image="img/Product/Signature/coco.png">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="col-lg-12 portfolio-item second mb-4">
+                    <div class="row">
+                        <div class="col-12 text-left">
+                            <h4 class="section-title position-relative mb-3">frutal</h4>
+                            <h5 class="text-muted">Base Agua</h5>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item second">
@@ -292,8 +354,9 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Mango Dorado</h5>
                         <p class="m-0 mb-4">Mango maduro de aroma intenso, transformado en oro cremoso.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="2.1" data-name="Mango Dorado"
-                            data-price="4000" data-image="img/Product/Refrescante/mango.jpg">Add to Cart</button>
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="2.1"
+                            data-name="Mango Dorado" data-price="4000"
+                            data-image="img/Product/Refrescante/mango.jpg">Add to Cart</button>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item second">
@@ -309,7 +372,7 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Mora Fresca de la Montaña </h5>
                         <p class="m-0 mb-4">Un sorbo helado de bosque andino en cada bocado..</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="2.2"
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="2.2"
                             data-name="Mora Fresca de la Montaña" data-price="4000"
                             data-image="img/Product/Refrescante/mora.jpg">Add to Cart</button>
                     </div>
@@ -327,8 +390,9 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Mango Enchilado</h5>
                         <p class="m-0 mb-4">Chamoy mexicano con fuego tropical.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="2.3" data-name="Mango Enchilado"
-                            data-price="4000" data-image="img/Product/Refrescante/mango-enchilado.jpg">Add to
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="2.3"
+                            data-name="Mango Enchilado" data-price="4000"
+                            data-image="img/Product/Refrescante/mango-enchilado.jpg">Add to
                             Cart</button>
                     </div>
                 </div>
@@ -346,8 +410,9 @@
                         <h5 class="font-weight-bold mb-4">Maracumango Fusión</h5>
                         <p class="m-0 mb-4">Mango jugoso y maracuyá vibrante en una fusión irresistible que despierta el
                             paladar..</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="2.4" data-name="Maracumango Fusión"
-                            data-price="4000" data-image="img/Product/Refrescante/maracumango.jpg">Add to Cart</button>
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="2.4"
+                            data-name="Maracumango Fusión" data-price="4000"
+                            data-image="img/Product/Refrescante/maracumango.jpg">Add to Cart</button>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item second">
@@ -363,7 +428,7 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Maracuyá del Trópico</h5>
                         <p class="m-0 mb-4">Pasión tropical en cada cucharada vibrante.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="2.5"
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="2.5"
                             data-name="Maracuyá del Trópico" data-price="4000"
                             data-image="img/Product/Refrescante/maracuya.jpg">Add to Cart</button>
                     </div>
@@ -381,8 +446,9 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Salpicon Caribeño</h5>
                         <p class="m-0 mb-4">Caribe entero en fiesta frutal.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="2.6" data-name="Salpicon Caribeño"
-                            data-price="4000" data-image="img/Product/Refrescante/salpicon.jpg">Add to Cart</button>
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="2.6"
+                            data-name="Salpicon Caribeño" data-price="4000"
+                            data-image="img/Product/Refrescante/salpicon.jpg">Add to Cart</button>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item second">
@@ -398,16 +464,24 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Albahaca Limón Mediterráneo</h5>
                         <p class="m-0 mb-4">Jardín italiano en frescura cítrica.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="2.7"
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="2.7"
                             data-name="Albahaca Limón Mediterráneo" data-price="4000"
                             data-image="img/Product/Refrescante/limon.jpg">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="col-lg-12 portfolio-item third mb-4">
+                    <div class="row">
+                        <div class="col-12 text-left">
+                            <h4 class="section-title position-relative mb-3">Gourmet</h4>
+                            <h5 class="text-muted">Yogurt y Crema</h5>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item third">
                     <div
                         class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
                         <div class="bg-primary mt-n5 py-3" style="width: 80px;">
-                            <h4 class="font-weight-bold text-oliva mb-0">$5.000</h4>
+                            <h4 class="font-weight-bold text-oliva mb-0">$6.000</h4>
                         </div>
                         <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3"
                             style="width: 150px; height: 150px;">
@@ -416,15 +490,16 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Pie de Limon</h5>
                         <p class="m-0 mb-4">Tarta soleada en explosión cremosa.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="3.1" data-name="Pie de Limon"
-                            data-price="5000" data-image="img/Product/Elite/pie-limon.png">Add to Cart</button>
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="3.1"
+                            data-name="Pie de Limon" data-price="6000" data-image="img/Product/Elite/pie-limon.png">Add
+                            to Cart</button>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item third">
                     <div
                         class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
                         <div class="bg-primary mt-n5 py-3" style="width: 80px;">
-                            <h4 class="font-weight-bold text-oliva mb-0">$5.000</h4>
+                            <h4 class="font-weight-bold text-oliva mb-0">$6.000</h4>
                         </div>
                         <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3"
                             style="width: 150px; height: 150px;">
@@ -434,15 +509,16 @@
                         <h5 class="font-weight-bold mb-4">Yogurt Mango</h5>
                         <p class="m-0 mb-4">yogurt cremoso y mango dorado en un equilibrio perfecto entre lo refrescante
                             y lo frutal.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="3.2" data-name="Yogurt Mango"
-                            data-price="5000" data-image="img/Product/Elite/yogurt-mango.jpg">Add to Cart</button>
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="3.2"
+                            data-name="Yogurt Mango" data-price="6000"
+                            data-image="img/Product/Elite/yogurt-mango.jpg">Add to Cart</button>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item third">
                     <div
                         class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
                         <div class="bg-primary mt-n5 py-3" style="width: 80px;">
-                            <h4 class="font-weight-bold text-oliva mb-0">$5.000</h4>
+                            <h4 class="font-weight-bold text-oliva mb-0">$6.000</h4>
                         </div>
                         <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3"
                             style="width: 150px; height: 150px;">
@@ -451,8 +527,8 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Crema y Fresas del Huerto</h5>
                         <p class="m-0 mb-4">Amor de huerta en pureza cremosa.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="3.4"
-                            data-name="Crema y Fresas del Huerto" data-price="5000"
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="3.3"
+                            data-name="Crema y Fresas del Huerto" data-price="6000"
                             data-image="img/Product/Elite/crema-fresas.jpg">Add to Cart</button>
                     </div>
                 </div>
@@ -460,7 +536,7 @@
                     <div
                         class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
                         <div class="bg-primary mt-n5 py-3" style="width: 80px;">
-                            <h4 class="font-weight-bold text-oliva mb-0">$5.000</h4>
+                            <h4 class="font-weight-bold text-oliva mb-0">$6.000</h4>
                         </div>
                         <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3"
                             style="width: 150px; height: 150px;">
@@ -469,15 +545,16 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Nutella Auténtica</h5>
                         <p class="m-0 mb-4">Secreto italiano extendido a helado.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="3.5" data-name="Nutella Auténtica"
-                            data-price="5000" data-image="img/Product/Elite/Nutella.jpg">Add to Cart</button>
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="3.4"
+                            data-name="Nutella Auténtica" data-price="6000"
+                            data-image="img/Product/Elite/Nutella.jpg">Add to Cart</button>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item third">
                     <div
                         class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
                         <div class="bg-primary mt-n5 py-3" style="width: 80px;">
-                            <h4 class="font-weight-bold text-oliva mb-0">$5.000</h4>
+                            <h4 class="font-weight-bold text-oliva mb-0">$6.000</h4>
                         </div>
                         <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3"
                             style="width: 150px; height: 150px;">
@@ -486,16 +563,78 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Yogurt Fresas del Campo</h5>
                         <p class="m-0 mb-4">Campo rojo en yogurt cremoso puro.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="3.6"
-                            data-name="Yogurt Fresas del Campo" data-price="5000"
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="3.5"
+                            data-name="Yogurt Fresas del Campo" data-price="6000"
                             data-image="img/Product/Elite/yogurt-fresas.jpg">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item third">
+                    <div
+                        class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
+                        <div class="bg-primary mt-n5 py-3" style="width: 80px;">
+                            <h4 class="font-weight-bold text-oliva mb-0">$6.000</h4>
+                        </div>
+                        <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3"
+                            style="width: 150px; height: 150px;">
+                            <img class="rounded-circle w-100 h-100" src="img/Product/Elite/Moka.webp"
+                                style="object-fit: cover;">
+                        </div>
+                        <h5 class="font-weight-bold mb-4">Moka Profundo</h5>
+                        <p class="m-0 mb-4">Aroma italiano en cada cucharada lenta</p>
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="3.6"
+                            data-name="Moka Profundo" data-price="6000" data-image="img/Product/Elite/Moka.webp">Add to
+                            Cart</button>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item third">
+                    <div
+                        class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
+                        <div class="bg-primary mt-n5 py-3" style="width: 80px;">
+                            <h4 class="font-weight-bold text-oliva mb-0">$6.000</h4>
+                        </div>
+                        <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3"
+                            style="width: 150px; height: 150px;">
+                            <img class="rounded-circle w-100 h-100" src="img/Product/Elite/capuchino.webp"
+                                style="object-fit: cover;">
+                        </div>
+                        <h5 class="font-weight-bold mb-4">Capuchino Italiano</h5>
+                        <p class="m-0 mb-4">Café romano con cremosidad perfecta</p>
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="3.7"
+                            data-name="Capuchino Italiano" data-price="6000"
+                            data-image="img/Product/Elite/capuchino.webp">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item third">
+                    <div
+                        class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
+                        <div class="bg-primary mt-n5 py-3" style="width: 80px;">
+                            <h4 class="font-weight-bold text-oliva mb-0">$6.000</h4>
+                        </div>
+                        <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3"
+                            style="width: 150px; height: 150px;">
+                            <img class="rounded-circle w-100 h-100" src="img/Product/Elite/chocorramo.webp"
+                                style="object-fit: cover;">
+                        </div>
+                        <h5 class="font-weight-bold mb-4">Chocorramo Clásico</h5>
+                        <p class="m-0 mb-4">Icono colombiano en versión cremosa</p>
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="3.8"
+                            data-name="Chocorramo Clásico" data-price="6000"
+                            data-image="img/Product/Elite/chocorramo.webp">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="col-lg-12 portfolio-item fourth mb-4">
+                    <div class="row">
+                        <div class="col-12 text-left">
+                            <h4 class="section-title position-relative mb-3">Edicion Especial</h4>
+                            <h5 class="text-muted">Postre Helado</h5>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item fourth">
                     <div
                         class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
                         <div class="bg-primary mt-n5 py-3" style="width: 80px;">
-                            <h4 class="font-weight-bold text-oliva mb-0">$7.000</h4>
+                            <h4 class="font-weight-bold text-oliva mb-0">$8.000</h4>
                         </div>
                         <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3"
                             style="width: 150px; height: 150px;">
@@ -504,15 +643,16 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Chescake de Mora</h5>
                         <p class="m-0 mb-4">Chescake de Mora Delicioso.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="4.1" data-name="Chescake de Mora"
-                            data-price="7000" data-image="img/Product/Premium/Cheesca-kemora.png">Add to Cart</button>
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="4.1"
+                            data-name="Chescake de Mora" data-price="8000"
+                            data-image="img/Product/Premium/Cheesca-kemora.png">Add to Cart</button>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item fourth">
                     <div
                         class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
                         <div class="bg-primary mt-n5 py-3" style="width: 80px;">
-                            <h4 class="font-weight-bold text-oliva mb-0">$7.000</h4>
+                            <h4 class="font-weight-bold text-oliva mb-0">$8.000</h4>
                         </div>
                         <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3"
                             style="width: 150px; height: 150px;">
@@ -521,15 +661,16 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Postre Tres Leches</h5>
                         <p class="m-0 mb-4">Postre Tres Leches Delicioso.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="4.2" data-name="Postre Tres Leches"
-                            data-price="7000" data-image="img/Product/Premium/tres-leches.jpg">Add to Cart</button>
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="4.2"
+                            data-name="Postre Tres Leches" data-price="8000"
+                            data-image="img/Product/Premium/tres-leches.jpg">Add to Cart</button>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item fourth">
                     <div
                         class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
                         <div class="bg-primary mt-n5 py-3" style="width: 80px;">
-                            <h4 class="font-weight-bold text-oliva mb-0">$7.000</h4>
+                            <h4 class="font-weight-bold text-oliva mb-0">$8.000</h4>
                         </div>
                         <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3"
                             style="width: 150px; height: 150px;">
@@ -538,12 +679,12 @@
                         </div>
                         <h5 class="font-weight-bold mb-4">Red Velvet Original</h5>
                         <p class="m-0 mb-4">Postre Red Velvet Delicioso.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="4.3"
-                            data-name="Red Velvet Original" data-price="7000"
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="4.3"
+                            data-name="Red Velvet Original" data-price="8000"
                             data-image="img/Product/Premium/red-velvet.png">Add to Cart</button>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item fifth">
+                <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item fourth">
                     <div
                         class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
                         <div class="bg-primary mt-n5 py-3" style="width: 80px;">
@@ -551,17 +692,18 @@
                         </div>
                         <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3"
                             style="width: 150px; height: 150px;">
-                            <img class="rounded-circle w-100 h-100" src="img/Product/Signature/fresa-condensada.jpg"
+                            <img class="rounded-circle w-100 h-100" src="img/Product/Premium/fresa-condensada.jpg"
                                 style="object-fit: cover;">
                         </div>
                         <h5 class="font-weight-bold mb-4">Fresa Leche Condensada</h5>
                         <p class="m-0 mb-4">Postre Fresa rellena de Leche Condensada Exquisita.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="5.1"
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="4.4"
                             data-name="Fresa Leche Condensada" data-price="8000"
-                            data-image="img/Product/Signature/fresa-condensada.jpg">Add to Cart</button>
+                            data-image="img/Product/Premium/fresa-condensada.jpg">Add to Cart</button>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item fifth">
+
+                <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item fourth">
                     <div
                         class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
                         <div class="bg-primary mt-n5 py-3" style="width: 80px;">
@@ -569,49 +711,15 @@
                         </div>
                         <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3"
                             style="width: 150px; height: 150px;">
-                            <img class="rounded-circle w-100 h-100" src="img/Product/Signature/coco.png"
-                                style="object-fit: cover;">
-                        </div>
-                        <h5 class="font-weight-bold mb-4">Coco del Pacífico Puro</h5>
-                        <p class="m-0 mb-4">Paraíso pacífico en cono helado.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="5.2"
-                            data-name="Coco del Pacífico Puro" data-price="4000"
-                            data-image="img/Product/Signature/coco.png">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item fifth">
-                    <div
-                        class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
-                        <div class="bg-primary mt-n5 py-3" style="width: 80px;">
-                            <h4 class="font-weight-bold text-oliva mb-0">$8.000</h4>
-                        </div>
-                        <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3"
-                            style="width: 150px; height: 150px;">
-                            <img class="rounded-circle w-100 h-100" src="img/Product/Signature/redvelvet-yogurt.jpg"
+                            <img class="rounded-circle w-100 h-100" src="img/Product/Premium/redvelvet-yogurt.jpg"
                                 style="object-fit: cover;">
                         </div>
                         <h5 class="font-weight-bold mb-4">RedVelvet Yogurt</h5>
                         <p class="m-0 mb-4">Postre Red Velvet relleno de Yogurt.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="5.3" data-name="RedVelvet Yogurt"
-                            data-price="8000" data-image="img/Product/Signature/redvelvet-yogurt.jpg">Add to
+                        <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="4.5"
+                            data-name="RedVelvet Yogurt" data-price="8000"
+                            data-image="img/Product/Premium/redvelvet-yogurt.jpg">Add to
                             Cart</button>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4 pb-2 portfolio-item fifth">
-                    <div
-                        class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
-                        <div class="bg-primary mt-n5 py-3" style="width: 80px;">
-                            <h4 class="font-weight-bold text-oliva mb-0">$8.000</h4>
-                        </div>
-                        <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3"
-                            style="width: 150px; height: 150px;">
-                            <img class="rounded-circle w-100 h-100" src="img/Product/Signature/coco-arequipe.jpeg"
-                                style="object-fit: cover;">
-                        </div>
-                        <h5 class="font-weight-bold mb-4">Coco Arequipe</h5>
-                        <p class="m-0 mb-4">Paraíso pacífico con deliciosso arequipe helado.</p>
-                        <button class="btn btn-sm btn-secondary add-to-cart" data-id="5.4" data-name="Coco Arequipe"
-                            data-price="8000" data-image="img/Product/Signature/coco-arequipe.jpeg">Add to Cart</button>
                     </div>
                 </div>
             </div>
@@ -691,7 +799,10 @@
         <script src="js/main.js"></script>
 
         <!-- Cart Javascript -->
-        <script src="js/cart.js"></script>
+        <!-- Cart Javascript -->
+        <!-- <script src="js/cart.js"></script> -->
+        <!-- Cart Debug Javascript -->
+        <script src="js/cart_debug.js"></script>
 
         <!-- Script para abrir categoria en galeria/productos -->
         <script>
