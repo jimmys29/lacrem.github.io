@@ -127,8 +127,8 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <div class="owl-carousel service-carousel">
-                        <div class="service-item">
+                    <div class="owl-carousel service-carousel" id="serviceCarousel">
+                        <div class="service-item" data-service-id="punto-de-venta">
                             <div class="service-img mx-auto">
                                 <img class="rounded-circle w-100 h-100 bg-light p-3" src="img/service-4.png"
                                     style="object-fit: cover;">
@@ -155,9 +155,7 @@
                                     class="border-bottom border-secondary text-decoration-none text-secondary">Contactanos</a>
                             </div>
                         </div>
-                        <div class="service-item">
-                            <div class="service-img mx-auto">
-                                <img class="rounded-circle w-100 h-100 bg-light p-3" src="img/Service/service-3.jpg"
+                        <div class="service-item" data-service-id="celebra-con-la-crem">
                                     style="object-fit: cover;">
                             </div>
                             <div class="position-relative text-center bg-light rounded p-4 pb-5"
@@ -178,9 +176,7 @@
                                     class="border-bottom border-secondary text-decoration-none text-secondary">Contactanos</a>
                             </div>
                         </div>
-                        <div class="service-item">
-                            <div class="service-img mx-auto">
-                                <img class="rounded-circle w-100 h-100 bg-light p-3" src="img/Service/service-5.jpg"
+                        <div class="service-item" data-service-id="ser-distribuidor">
                                     style="object-fit: cover;">
                             </div>
                             <div class="position-relative text-center bg-light rounded p-4 pb-5"
@@ -201,9 +197,7 @@
                                     class="border-bottom border-secondary text-decoration-none text-secondary">Contactanos</a>
                             </div>
                         </div>
-                        <div class="service-item">
-                            <div class="service-img mx-auto">
-                                <img class="rounded-circle w-100 h-100 bg-light p-3" src="img/Service/service-1.png"
+                        <div class="service-item" data-service-id="proveedor">
                                     style="object-fit: cover;">
                             </div>
                             <div class="position-relative text-center bg-light rounded p-4 pb-5"
@@ -353,6 +347,44 @@
 
     <!-- Cart Javascript -->
     <script src="js/cart.js"></script>
+
+    <!-- Service Navigation Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Obtener el hash de la URL
+            const hash = window.location.hash.substring(1);
+            
+            if (hash) {
+                // Esperar a que el carousel se inicialice
+                setTimeout(() => {
+                    const carousel = $('#serviceCarousel');
+                    const items = carousel.find('.service-item');
+                    let targetIndex = 0;
+                    
+                    // Encontrar el índice del servicio seleccionado
+                    items.each(function(index) {
+                        if ($(this).data('service-id') === hash) {
+                            targetIndex = index;
+                            return false;
+                        }
+                    });
+                    
+                    // Si encontramos el servicio, navegar a él
+                    if (carousel.data('owl.carousel')) {
+                        carousel.trigger('to.owl.carousel', [targetIndex, 300]);
+                    }
+                    
+                    // Hacer scroll al carousel después de un pequeño delay
+                    setTimeout(() => {
+                        const carouselElement = document.querySelector('.service-carousel');
+                        if (carouselElement) {
+                            carouselElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }, 400);
+                }, 500);
+            }
+        });
+    </script>
 </body>
 
 </html>
