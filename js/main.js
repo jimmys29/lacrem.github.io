@@ -130,6 +130,128 @@
         loop: true,
         items: 1
     });
+
+    // WhatsApp widget
+    $(document).ready(function () {
+        if ($('#whatsapp-widget').length) {
+            return;
+        }
+
+        var whatsappStyles = `
+            <style>
+                .whatsapp-widget {
+                    position: fixed;
+                    bottom: 24px;
+                    right: 24px;
+                    z-index: 10000;
+                    font-family: 'Poppins', sans-serif;
+                }
+
+                .whatsapp-widget__button {
+                    width: 64px;
+                    height: 64px;
+                    border-radius: 50%;
+                    background-color: #25D366;
+                    color: #ffffff;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 30px;
+                    cursor: pointer;
+                    box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
+                    animation: whatsapp-pulse 2.6s ease-in-out infinite;
+                    transition: transform 0.2s ease, box-shadow 0.2s ease;
+                }
+
+                .whatsapp-widget__button:hover {
+                    transform: scale(1.08);
+                    box-shadow: 0 10px 24px rgba(37, 211, 102, 0.45);
+                }
+
+                .whatsapp-widget__label {
+                    position: absolute;
+                    right: 0;
+                    bottom: 76px;
+                    background-color: #030303;
+                    color: #ffffff;
+                    padding: 10px 14px;
+                    border-radius: 18px;
+                    font-size: 13px;
+                    font-weight: 600;
+                    white-space: nowrap;
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+                    opacity: 0;
+                    transform: translateY(8px);
+                    transition: opacity 0.2s ease, transform 0.2s ease;
+                    pointer-events: auto;
+                }
+
+                .whatsapp-widget__label::after {
+                    content: '';
+                    position: absolute;
+                    right: 16px;
+                    bottom: -8px;
+                    border-left: 8px solid transparent;
+                    border-right: 8px solid transparent;
+                    border-top: 8px solid #25D366;
+                }
+
+                .whatsapp-widget:hover .whatsapp-widget__label,
+                .whatsapp-widget__label:hover {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+
+                @keyframes whatsapp-pulse {
+                    0% {
+                        transform: scale(1);
+                    }
+                    50% {
+                        transform: scale(1.04);
+                    }
+                    100% {
+                        transform: scale(1);
+                    }
+                }
+
+                @media (max-width: 576px) {
+                    .whatsapp-widget {
+                        bottom: 18px;
+                        right: 18px;
+                    }
+
+                    .whatsapp-widget__button {
+                        width: 56px;
+                        height: 56px;
+                        font-size: 26px;
+                    }
+
+                    .whatsapp-widget__label {
+                        bottom: 68px;
+                        font-size: 12px;
+                    }
+                }
+            </style>
+        `;
+
+        $('head').append(whatsappStyles);
+
+        var whatsappHTML = `
+            <div class="whatsapp-widget" id="whatsapp-widget">
+                <div class="whatsapp-widget__button" id="whatsapp-widget-button" aria-label="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="whatsapp-widget__label" id="whatsapp-widget-label">necesitas ayuda?</div>
+            </div>
+        `;
+
+        $('body').append(whatsappHTML);
+
+        var whatsappUrl = 'https://wa.me/573174137207';
+        $('#whatsapp-widget-button, #whatsapp-widget-label').on('click', function () {
+            window.open(whatsappUrl, '_blank');
+        });
+    });
     
 })(jQuery);
 
