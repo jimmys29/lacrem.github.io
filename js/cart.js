@@ -106,7 +106,20 @@
 
         updateBadge: function () {
             const count = this.items.reduce((sum, item) => sum + item.quantity, 0);
-            $('#cart-badge').text(count);
+            const $badge = $('#cart-badge');
+            $badge.text(count);
+            const $cartLink = $badge.closest('a');
+            if (count > 0) {
+                $cartLink.addClass('cart-has-items');
+            } else {
+                $cartLink.removeClass('cart-has-items');
+            }
+            // Pulse the badge when items change
+            if ($badge.length) {
+                $badge.removeClass('cart-badge-pulse');
+                void $badge[0].offsetWidth;
+                $badge.addClass('cart-badge-pulse');
+            }
         },
 
         render: function () {

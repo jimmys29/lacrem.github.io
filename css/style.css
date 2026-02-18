@@ -5383,13 +5383,13 @@ a.badge:focus {
 }
 
 .badge-primary {
-  color: #212529;
-  background-color: #F195B2;
+  color: white;
+  background-color: #E5957A;
 }
 
 a.badge-primary:hover,
 a.badge-primary:focus {
-  color: #212529;
+  color: white;
   background-color: #eb6891;
 }
 
@@ -10974,12 +10974,113 @@ h6,
   border-radius: 45px;
 }
 
+/* Services page vertical layout */
+.service-carousel.vertical {
+  display: block;
+}
+
+.service-carousel.vertical .service-item {
+  margin-bottom: 60px;
+}
+
+.service-carousel.vertical .service-item p {
+  font-size: 1.4rem;
+  line-height: 1.8;
+}
+
+/* Cart icon size and badge emphasis */
+.nav-item .fa-shopping-cart {
+  font-size: 22px;
+}
+
+.nav-item.cart-has-items .fa-shopping-cart {
+  color: #e74c3c;
+}
+
+#cart-badge {
+  font-size: 0.9rem;
+  padding: 0.35em 0.55em;
+  margin-left: 6px;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+#cart-badge.cart-badge-pulse {
+  background-color: #e74c3c;
+  transform: scale(1.15);
+  animation: cart-badge-pop 0.6s ease;
+}
+
+@keyframes cart-badge-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .back-to-top {
   position: fixed;
   display: none;
   right: 30px;
   bottom: 30px;
   z-index: 11;
+}
+
+/* Product page cart widget */
+.cart-widget {
+  position: fixed;
+  right: 24px;
+  bottom: 300px;
+  z-index: 10000;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  border-radius: 999px;
+  padding: 10px 14px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  font-weight: 600;
+  color: #333333;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: cart-widget-float 3s ease-in-out infinite;
+}
+
+.cart-widget i {
+  font-size: 20px;
+  color: #25D366;
+}
+
+.cart-widget:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+  text-decoration: none;
+  color: #333333;
+}
+
+@keyframes cart-widget-float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 576px) {
+  .cart-widget {
+    right: 18px;
+    bottom: 280px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
 }
 
 .nav-bar::before {
@@ -11248,7 +11349,7 @@ h6,
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #FFFFFF;
+  background-color: rgba(246, 241, 232, 0.5);
   text-decoration: none;
   opacity: 0;
   transition: .5s;
