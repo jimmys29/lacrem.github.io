@@ -875,11 +875,11 @@
 
                     // If viewing "All" (currentFilter === '*'), use randomized list
                     if (currentFilter === '*') {
-                        // Filter to get product items (exclude section headers)
+                        // Filter to get product items (exclude section headers which have col-lg-12)
                         $(allItems).each(function () {
                             var $item = $(this);
-                            // Only include items with category classes, not section headers
-                            if ($item.hasClass('first') || $item.hasClass('second') || $item.hasClass('third') || $item.hasClass('fourth')) {
+                            // Only include items with category classes AND exclude section headers
+                            if (!$item.hasClass('col-lg-12') && ($item.hasClass('first') || $item.hasClass('second') || $item.hasClass('third') || $item.hasClass('fourth'))) {
                                 matchItems.push($item);
                             }
                         });
