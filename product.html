@@ -718,8 +718,7 @@
                         <p class="m-0 mb-4">Postre Red Velvet relleno de Yogurt.</p>
                         <button class="btn btn-sm btn-secondary add-to-cart" onclick="addToCart(this)" data-id="4.5"
                             data-name="RedVelvet Yogurt" data-price="8000"
-                            data-image="img/Product/Premium/redvelvet-yogurt.jpg">Add to
-                            Cart</button>
+                           data-ref="./cart.html"  data-image="img/Product/Premium/redvelvet-yogurt.jpg">Add to Cart</button>
                     </div>
                 </div>
             </div>
@@ -730,6 +729,12 @@
             </div>
         </div>
         <!-- Products End -->
+
+            <!-- Cart Widget -->
+            <a href="cart.html" class="cart-widget" aria-label="Ir al carrito">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Ir al carrito</span>
+            </a>
 
 
         <!-- Footer Start -->
@@ -846,6 +851,19 @@
                 // --- LOAD MORE FUNCTIONALITY ---
                 var currentLimit = 8;
                 var currentFilter = category ? "." + category : '*'; // Default filter or from URL
+                var randomizedItems = null; // Store randomized items when "All" is selected
+
+                // Fisher-Yates shuffle algorithm
+                function shuffleArray(array) {
+                    var shuffled = array.slice(); // Create a copy
+                    for (var i = shuffled.length - 1; i > 0; i--) {
+                        var j = Math.floor(Math.random() * (i + 1));
+                        var temp = shuffled[i];
+                        shuffled[i] = shuffled[j];
+                        shuffled[j] = temp;
+                    }
+                    return shuffled;
+                }
 
                 // Function to update visibility of items and Load More button
                 function updateVisibility() {
@@ -855,13 +873,31 @@
                     var allItems = $container.isotope('getItemElements');
                     var matchItems = [];
 
-                    // Filter manually to find which items match the category
-                    $(allItems).each(function () {
-                        var $item = $(this);
-                        if (currentFilter === '*' || $item.is(currentFilter)) {
-                            matchItems.push($item);
+                    // If viewing "All" (currentFilter === '*'), use randomized list
+                    if (currentFilter === '*') {
+                        // Filter to get product items (exclude section headers)
+                        $(allItems).each(function () {
+                            var $item = $(this);
+                            // Only include items with category classes, not section headers
+                            if ($item.hasClass('first') || $item.hasClass('second') || $item.hasClass('third') || $item.hasClass('fourth')) {
+                                matchItems.push($item);
+                            }
+                        });
+
+                        // Randomize if not already done
+                        if (!randomizedItems) {
+                            randomizedItems = shuffleArray(matchItems);
                         }
-                    });
+                        matchItems = randomizedItems;
+                    } else {
+                        // Filter manually to find which items match the category
+                        $(allItems).each(function () {
+                            var $item = $(this);
+                            if ($item.is(currentFilter)) {
+                                matchItems.push($item);
+                            }
+                        });
+                    }
 
                     // Hide all initially (remove visible class)
                     $(allItems).removeClass('visible-item');
@@ -895,6 +931,10 @@
                     var filterValue = $(this).attr('data-filter');
                     currentFilter = filterValue;
                     currentLimit = 8; // Reset limit when filter changes
+
+                    // Reset randomized items when filter changes
+                    randomizedItems = null;
+
                     updateVisibility();
 
                     // Re-apply active class (already done in previous handler, but good to be safe)
