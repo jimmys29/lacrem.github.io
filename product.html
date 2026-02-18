@@ -920,7 +920,8 @@
                     });
                 }
 
-                // Initial run
+                // Initial run - always reset for fresh randomization on page load
+                randomizedItems = null;
                 updateVisibility();
 
                 // Unbind existing click handlers from main.js/template to prevent conflict
