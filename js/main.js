@@ -141,7 +141,7 @@
             <style>
                 .whatsapp-widget {
                     position: fixed;
-                    bottom: 100px;
+                    bottom: 180px;
                     right: 24px;
                     z-index: 10000;
                     font-family: 'Poppins', sans-serif;
@@ -216,7 +216,7 @@
 
                 @media (max-width: 576px) {
                     .whatsapp-widget {
-                        bottom: 85px;
+                        bottom: 160px;
                         right: 18px;
                     }
 
