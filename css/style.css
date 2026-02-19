@@ -11040,8 +11040,14 @@ h6,
 
 .navbar-nav .nav-link i {
   font-size: 18px;
-  color: #F195B2;
+  color: #E5957A;
   margin-right: 5px;
+  transition: color 0.3s ease;
+}
+
+/* Carrito con productos - cambiar color */
+.navbar-nav .nav-link.cart-has-items i {
+  color: #5E6F4A;
 }
 
 .navbar-nav .nav-link .badge {
@@ -11055,7 +11061,11 @@ h6,
 }
 
 .navbar-nav .nav-link:hover {
-  color: #F195B2 !important;
+  color: #E5957A !important;
+}
+
+.navbar-nav .nav-link.cart-has-items:hover {
+  color: #5E6F4A !important;
 }
 
 @media (max-width: 576px) {
