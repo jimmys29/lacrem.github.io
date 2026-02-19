@@ -11033,55 +11033,34 @@ h6,
 }
 
 /* Product page cart widget */
-.cart-widget {
-  position: fixed;
-  right: 24px;
-  bottom: 300px;
-  z-index: 10000;
+/* Cart Widget in Navbar */
+.navbar-nav .nav-link {
+  color: #333 !important;
+}
+
+.navbar-nav .nav-link i {
+  font-size: 18px;
+  color: #F195B2;
+  margin-right: 5px;
+}
+
+.navbar-nav .nav-link .badge {
+  border-radius: 50%;
+  min-width: 20px;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  background: #ffffff;
-  border-radius: 999px;
-  padding: 10px 14px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
-  font-weight: 600;
-  color: #333333;
-  text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  animation: cart-widget-float 3s ease-in-out infinite;
+  justify-content: center;
+  font-size: 0.75rem;
+  margin-left: 3px;
 }
 
-.cart-widget i {
-  font-size: 20px;
-  color: #25D366;
-}
-
-.cart-widget:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
-  text-decoration: none;
-  color: #333333;
-}
-
-@keyframes cart-widget-float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-4px);
-  }
-  100% {
-    transform: translateY(0);
-  }
+.navbar-nav .nav-link:hover {
+  color: #F195B2 !important;
 }
 
 @media (max-width: 576px) {
-  .cart-widget {
-    right: 18px;
-    bottom: 280px;
-    padding: 8px 12px;
-    font-size: 0.9rem;
+  .navbar-nav .nav-link i {
+    font-size: 16px;
   }
 }
 
