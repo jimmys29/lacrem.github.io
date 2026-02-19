@@ -890,7 +890,7 @@
                         }
                         matchItems = randomizedItems;
                     } else {
-                        // Filter manually to find which items match the category
+                        // Filter manually to find which items match the category (INCLUDES headers!)
                         $(allItems).each(function () {
                             var $item = $(this);
                             if ($item.is(currentFilter)) {
@@ -907,8 +907,11 @@
                         $(matchItems[i]).addClass('visible-item');
                     }
 
-                    // Show/Hide Load More button
-                    if (matchItems.length > currentLimit) {
+                    // Show/Hide Load More button (only for filtered categories, not for headers)
+                    var productItems = matchItems.filter(function(item) {
+                        return !$(item).hasClass('col-lg-12');
+                    });
+                    if (productItems.length > currentLimit) {
                         $('#loadMoreBtn').show();
                     } else {
                         $('#loadMoreBtn').hide();
