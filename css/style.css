@@ -11074,6 +11074,30 @@ h6,
   }
 }
 
+/* Add to Cart Button Styles */
+.product-item {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.add-to-cart {
+  position: relative !important;
+  z-index: 100 !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
+.portfolio-item::after,
+.portfolio-item::before {
+  pointer-events: none !important;
+}
+
+@media (max-width: 576px) {
+  .navbar-nav .nav-link i {
+    font-size: 16px;
+  }
+}
+
 .nav-bar::before {
   position: absolute;
   content: "";
