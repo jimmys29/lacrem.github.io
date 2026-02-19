@@ -50,8 +50,8 @@
     });
 
 
-    // Service and team carousel
-    $(".service-carousel, .team-carousel").owlCarousel({
+    // Service and team carousel (exclude vertical layouts)
+    $(".service-carousel:not(.vertical), .team-carousel").owlCarousel({
         autoplay: false,
         smartSpeed: 1500,
         margin: 30,

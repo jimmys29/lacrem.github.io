@@ -28,9 +28,22 @@
     <style>
         /* Vertical Service Layout */
         .service-carousel.vertical {
-            display: flex;
-            flex-direction: column;
-            gap: 3rem;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 3rem !important;
+        }
+
+        .service-carousel.vertical .owl-stage-outer {
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        .service-carousel.vertical .owl-stage {
+            display: flex !important;
+            flex-direction: column !important;
+            width: 100% !important;
+            height: auto !important;
+            transform: translate3d(0, 0, 0) !important;
         }
 
         .service-carousel.vertical .service-item {
@@ -38,6 +51,10 @@
             align-items: center;
             gap: 2rem;
             margin-bottom: 2rem;
+            width: 100% !important;
+            height: auto !important;
+            position: relative !important;
+            left: 0 !important;
         }
 
         .service-carousel.vertical .service-item:nth-child(odd) {
@@ -74,6 +91,15 @@
         .service-carousel.vertical h5 {
             margin-top: 0 !important;
             padding-top: 0 !important;
+        }
+
+        /* Hide carousel navigation for vertical layout */
+        .service-carousel.vertical .owl-nav {
+            display: none !important;
+        }
+
+        .service-carousel.vertical .owl-dots {
+            display: none !important;
         }
 
         @media (max-width: 768px) {
