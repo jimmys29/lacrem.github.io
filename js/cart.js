@@ -218,6 +218,25 @@
         Cart.add(product);
     };
 
+    // Global function to add to cart and redirect to cart page
+    window.addToCartAndRedirect = function (element) {
+        const $btn = $(element);
+        const $productItem = $btn.closest('.product-item');
+        let description = $productItem.find('p').text().trim();
+
+        const product = {
+            id: $btn.data('id'),
+            name: $btn.data('name'),
+            price: $btn.data('price'),
+            image: $btn.data('image'),
+            description: description
+        };
+
+        Cart.add(product);
+        // Redirect to cart page
+        window.location.href = './cart.html';
+    };
+
     // --- INITIALIZATION ---
     $(document).ready(function () {
         Cart.init();
