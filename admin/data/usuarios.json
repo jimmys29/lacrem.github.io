@@ -1,0 +1,12 @@
+[
+    {
+        "id": "admin_001",
+        "usuario": "admin",
+        "password": "$2y$10$9LJr.9qKvlHLXCAqXmfbKOVDhPvI7iEBQPkVZSEz4SqQC/L9vN.R2",
+        "nombre": "Administrador",
+        "email": "admin@lacrem.com",
+        "rol": "admin",
+        "activo": true,
+        "fecha_creacion": "2026-02-25 12:00:00"
+    }
+]
