@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Inicio Rápido - La Crem Admin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        h1 { color: #667eea; margin-bottom: 10px; font-size: 2.5em; }
+        .subtitle { color: #999; margin-bottom: 30px; font-size: 1.1em; }
+        h2 { color: #667eea; margin-top: 30px; margin-bottom: 15px; border-bottom: 2px solid #667eea; padding-bottom: 10px; }
+        p { margin-bottom: 15px; }
+        .paso { background: #f8f9fa; padding: 20px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #667eea; }
+        .paso h3 { color: #667eea; margin-bottom: 10px; }
+        .paso code { background: #e9ecef; padding: 2px 6px; border-radius: 3px; font-family: 'Courier New', monospace; }
+        .botones {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .btn {
+            padding: 15px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+        .info { background: #cfe2ff; border-left: 4px solid #0d6efd; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        .success { background: #d1e7dd; border-left: 4px solid #198754; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        .warning { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        .caracteristicas { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 20px 0; }
+        .caracteristica { background: #f8f9fa; padding: 15px; border-radius: 5px; text-align: center; }
+        .caracteristica i { color: #667eea; font-size: 2em; margin-bottom: 10px; }
+        ul { margin-left: 20px; }
+        li { margin-bottom: 8px; }
+        .footer { margin-top: 40px; padding-top: 20px; border-top: 2px solid #e0e0e0; text-align: center; color: #999; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍦 La Crem - Sistema de Gestión</h1>
+        <p class="subtitle">Inicio rápido para administradores</p>
+
+        <div class="success">
+            <strong>✅ Sistema instalado correctamente</strong><br>
+            El panel de administración está listo para ser utilizado.
+        </div>
+
+        <h2>🚀 Próximos Pasos</h2>
+
+        <div class="paso">
+            <h3>Paso 1: Acceder al Panel</h3>
+            <p>Haz clic en uno de los botones de abajo para acceder a las diferentes funciones:</p>
+        </div>
+
+        <div class="botones">
+            <a href="index.html" class="btn btn-primary">📊 Panel Principal</a>
+            <a href="clientes.html" class="btn btn-primary">👥 Gestionar Clientes</a>
+            <a href="pedidos.html" class="btn btn-primary">🛒 Crear Pedidos</a>
+            <a href="reportes.html" class="btn btn-primary">📈 Ver Reportes</a>
+        </div>
+
+        <h2>📋 Funcionalidades Principales</h2>
+
+        <div class="caracteristicas">
+            <div class="caracteristica">
+                <div style="font-size: 3em;">👥</div>
+                <h3>Clientes</h3>
+                <p>Crear y administrar clientes</p>
+            </div>
+            <div class="caracteristica">
+                <div style="font-size: 3em;">🛒</div>
+                <h3>Pedidos</h3>
+                <p>Registrar nuevos pedidos</p>
+            </div>
+            <div class="caracteristica">
+                <div style="font-size: 3em;">📊</div>
+                <h3>Reportes</h3>
+                <p>Analizar ventas por cliente</p>
+            </div>
+            <div class="caracteristica">
+                <div style="font-size: 3em;">💾</div>
+                <h3>Datos</h3>
+                <p>Almacenamiento seguro</p>
+            </div>
+        </div>
+
+        <h2>⚡ Inicio Rápido</h2>
+
+        <div class="paso">
+            <h3>1️⃣ Crear un Cliente</h3>
+            <ul>
+                <li>Ve a <code>Gestionar Clientes</code></li>
+                <li>Completa el formulario con los datos del cliente</li>
+                <li>Haz clic en "Guardar Cliente"</li>
+            </ul>
+        </div>
+
+        <div class="paso">
+            <h3>2️⃣ Crear un Pedido</h3>
+            <ul>
+                <li>Ve a <code>Crear Pedidos</code></li>
+                <li>Selecciona el cliente de la lista</li>
+                <li>Agrega los productos y cantidades</li>
+                <li>Aplica descuentos si es necesario</li>
+                <li>Haz clic en "Guardar Pedido"</li>
+            </ul>
+        </div>
+
+        <div class="paso">
+            <h3>3️⃣ Ver Reportes</h3>
+            <ul>
+                <li>Ve a <code>Ver Reportes</code></li>
+                <li>Visualiza estadísticas generales</li>
+                <li>Ve la tabla completa de ventas</li>
+                <li>Exporta a Excel si lo necesitas</li>
+            </ul>
+        </div>
+
+        <h2>📊 Productos Disponibles</h2>
+        
+        <p>El sistema viene con los siguientes productos pre-configurados:</p>
+        
+        <ul>
+            <li><strong>Signature</strong> - $150</li>
+            <li><strong>Premium</strong> - $180</li>
+            <li><strong>Tradicional</strong> - $120</li>
+            <li><strong>Refrescante</strong> - $140</li>
+            <li><strong>Elite</strong> - $200</li>
+        </ul>
+
+        <div class="info">
+            <strong>💡 Tip:</strong> Puedes personalizar los productos editando el archivo <code>pedidos.html</code> en la sección de código JavaScript donde está definida la variable <code>PRODUCTOS</code>.
+        </div>
+
+        <h2>🔧 Configuración</h2>
+
+        <p><strong>Almacenamiento Actual:</strong> Archivos JSON locales</p>
+
+        <div class="warning">
+            <strong>⚠️ Nota Importante:</strong><br>
+            Actualmente los datos se guardan en archivos JSON. Cuando tengas acceso a un servidor MySQL, podrás:
+            <ul style="margin-top: 10px;">
+                <li>Migrar todos los datos automáticamente</li>
+                <li>Disfrutar de mejor rendimiento</li>
+                <li>Tener copias de seguridad más robustas</li>
+            </ul>
+        </div>
+
+        <h2>📞 Soporte y Ayuda</h2>
+
+        <p><strong>Documentación Completa:</strong> Ver el archivo <code>README.md</code> en la carpeta admin/</p>
+
+        <p><strong>Problemas comunes:</strong></p>
+        <ul>
+            <li><strong>Los datos no se guardan:</strong> Verifica que la carpeta <code>/admin/data/</code> tenga permisos de escritura</li>
+            <li><strong>No aparecen los clientes:</strong> Recarga la página (F5) o borra la caché del navegador</li>
+            <li><strong>Error al crear cliente:</strong> Asegúrate de llenar todos los campos requeridos</li>
+        </ul>
+
+        <h2>🔄 Actualizaciones Futuras</h2>
+
+        <p>Está previsto agregar:</p>
+        <ul>
+            <li>✅ Migración a MySQL</li>
+            <li>✅ Sistema de autenticación (login)</li>
+            <li>✅ Edición de clientes</li>
+            <li>✅ Personalización de productos</li>
+            <li>✅ Integración con carrito de compras</li>
+            <li>✅ Envío automático de confirmaciones por email</li>
+        </ul>
+
+        <div class="footer">
+            <p>Sistema de Gestión de La Crem v1.0</p>
+            <p>Desarrollado para administración eficiente de clientes y pedidos</p>
+            <p><a href="/" style="color: #667eea; text-decoration: none;">← Volver a sitio principal</a></p>
+        </div>
+    </div>
+</body>
+</html>
