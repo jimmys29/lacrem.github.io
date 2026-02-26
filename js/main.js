@@ -247,7 +247,7 @@
 
         $('body').append(whatsappHTML);
 
-        var whatsappUrl = 'https://wa.me/573174137207';
+        var whatsappUrl = 'https://wa.me/573189519525';
         $('#whatsapp-widget-button, #whatsapp-widget-label').on('click', function () {
             window.open(whatsappUrl, '_blank');
         });
