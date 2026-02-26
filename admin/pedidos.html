@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Pedido - La Crem</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            width: auto;
+            margin-top: 10px;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            width: auto;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .items-list {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .item-row {
+            background: white;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 3px solid #667eea;
+        }
+
+        .item-info h4 {
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .item-info p {
+            color: #666;
+            font-size: 0.9em;
+            margin: 2px 0;
+        }
+
+        .item-actions button {
+            width: auto;
+            padding: 6px 10px;
+            font-size: 0.85em;
+            margin-left: 5px;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .product-card {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            border-color: #667eea;
+            background: #f0f2ff;
+        }
+
+        .product-card h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .product-card .precio {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .product-card button {
+            padding: 8px 12px;
+            font-size: 0.85em;
+        }
+
+        .resumen {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .resumen-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .resumen-row.total {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px solid #667eea;
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .input-cantidad {
+            width: 70px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-shopping-cart"></i> Crear Nuevo Pedido</h1>
+            <p>Registra un pedido para un cliente</p>
+            <a href="index.html" style="color: white; text-decoration: none; margin-top: 10px; display: inline-block;">
+                <i class="fas fa-arrow-left"></i> Volver al panel
+            </a>
+        </div>
+
+        <div class="content">
+            <!-- Formulario para crear pedido -->
+            <div class="card">
+                <h2><i class="fas fa-plus-circle"></i> Datos del Pedido</h2>
+                <div id="message" class="alert"></div>
+
+                <form id="formPedido">
+                    <div class="form-group">
+                        <label for="cliente_id">Cliente *</label>
+                        <select id="cliente_id" name="cliente_id" required>
+                            <option value="">Selecciona un cliente...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Selecciona Productos *</label>
+                        <div class="products-grid" id="productsGrid">
+                            <!-- Se llenará dinámicamente -->
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h3>Artículos añadidos</h3>
+                        <div class="items-list" id="itemsList">
+                            <p style="text-align: center; color: #999;">No hay artículos agregados</p>
+                        </div>
+                    </div>
+
+                    <div class="resumen" id="resumen">
+                        <div class="resumen-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="resumen-row">
+                            <label>Descuento (%):</label>
+                            <input type="number" id="descuento" name="descuento" value="0" min="0" max="100" style="width: 80px;">
+                        </div>
+                        <div class="resumen-row">
+                            <span>Descuento:</span>
+                            <span id="monto_descuento">$0.00</span>
+                        </div>
+                        <div class="resumen-row total">
+                            <span>Total:</span>
+                            <span id="total">$0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notas">Notas del Pedido</label>
+                        <textarea id="notas" name="notas" placeholder="Instrucciones especiales, referencias..."></textarea>
+                    </div>
+
+                    <button type="submit">
+                        <i class="fas fa-save"></i> Guardar Pedido
+                    </button>
+                </form>
+            </div>
+
+            <!-- Historial de pedidos -->
+            <div class="card">
+                <h2><i class="fas fa-history"></i> Pedidos Recientes</h2>
+                <div id="pedidosList" style="max-height: 600px; overflow-y: auto;">
+                    <p style="text-align: center; color: #999;">Cargando pedidos...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Productos disponibles (ajusta según tus productos)
+        const PRODUCTOS = [
+            { id: 'sig', nombre: 'Signature', precio: 150 },
+            { id: 'prem', nombre: 'Premium', precio: 180 },
+            { id: 'trad', nombre: 'Tradicional', precio: 120 },
+            { id: 'refr', nombre: 'Refrescante', precio: 140 },
+            { id: 'elit', nombre: 'Elite', precio: 200 }
+        ];
+
+        let pedidoActual = {
+            cliente_id: '',
+            items: [],
+            descuento: 0
+        };
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarClientes();
+            crearGridProductos();
+            cargarPedidos();
+
+            // Escuchar cambios en descuento
+            document.getElementById('descuento').addEventListener('change', actualizarResumen);
+        });
+
+        // Crear grid de productos
+        function crearGridProductos() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+
+            PRODUCTOS.forEach(producto => {
+                const div = document.createElement('div');
+                div.className = 'product-card';
+                div.innerHTML = `
+                    <h4>${producto.nombre}</h4>
+                    <div class="precio">$${producto.precio}</div>
+                    <input type="number" id="cant-${producto.id}" class="input-cantidad" value="0" min="0" placeholder="Cantidad">
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        // Cargar clientes
+        async function cargarClientes() {
+            try {
+                const response = await fetch('api/api.php?action=obtener_clientes');
+                const clientes = await response.json();
+
+                const select = document.getElementById('cliente_id');
+                select.innerHTML = '<option value="">Selecciona un cliente...</option>';
+
+                clientes.forEach(cliente => {
+                    const option = document.createElement('option');
+                    option.value = cliente.id;
+                    option.textContent = `${cliente.nombre} (${cliente.email})`;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error al cargar clientes:', error);
+            }
+        }
+
+        // Agregar productos al pedido
+        function agregarProductos() {
+            pedidoActual.items = [];
+
+            PRODUCTOS.forEach(producto => {
+                const cantidad = parseInt(document.getElementById(`cant-${producto.id}`).value) || 0;
+
+                if (cantidad > 0) {
+                    pedidoActual.items.push({
+                        producto_id: producto.id,
+                        nombre: producto.nombre,
+                        cantidad: cantidad,
+                        precio: producto.precio,
+                        subtotal: cantidad * producto.precio
+                    });
+                }
+            });
+
+            mostrarItemsPedido();
+            actualizarResumen();
+        }
+
+        // Mostrar items del pedido
+        function mostrarItemsPedido() {
+            const list = document.getElementById('itemsList');
+
+            if (pedidoActual.items.length === 0) {
+                list.innerHTML = '<p style="text-align: center; color: #999;">No hay artículos agregados</p>';
+                return;
+            }
+
+            let html = '';
+            pedidoActual.items.forEach((item, index) => {
+                html += `
+                    <div class="item-row">
+                        <div class="item-info">
+                            <h4>${item.nombre}</h4>
+                            <p>Cantidad: ${item.cantidad} x $${item.precio} = $${item.subtotal}</p>
+                        </div>
+                        <div class="item-actions">
+                            <button type="button" class="btn-delete" onclick="eliminarItem(${index})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            list.innerHTML = html;
+        }
+
+        function eliminarItem(index) {
+            pedidoActual.items.splice(index, 1);
+            mostrarItemsPedido();
+            actualizarResumen();
+        }
+
+        // Actualizar resumen
+        function actualizarResumen() {
+            const subtotal = pedidoActual.items.reduce((sum, item) => sum + item.subtotal, 0);
+            const descuento = parseFloat(document.getElementById('descuento').value) || 0;
+            const montoDescuento = (subtotal * descuento) / 100;
+            const total = subtotal - montoDescuento;
+
+            pedidoActual.descuento = descuento;
+
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('monto_descuento').textContent = `$${montoDescuento.toFixed(2)}`;
+            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Enviar formulario
+        document.getElementById('formPedido').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Actualizar items antes de enviar
+            agregarProductos();
+
+            if (!pedidoActual.cliente_id) {
+                mostrarMensaje('Selecciona un cliente', 'error');
+                return;
+            }
+
+            if (pedidoActual.items.length === 0) {
+                mostrarMensaje('Agrega al menos un producto', 'error');
+                return;
+            }
+
+            pedidoActual.cliente_id = document.getElementById('cliente_id').value;
+            pedidoActual.notas = document.getElementById('notas').value;
+
+            try {
+                const response = await fetch('api/api.php?action=guardar_pedido', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(pedidoActual)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    mostrarMensaje('Pedido guardado correctamente', 'success');
+                    document.getElementById('formPedido').reset();
+                    crearGridProductos();
+                    pedidoActual = { cliente_id: '', items: [], descuento: 0 };
+                    mostrarItemsPedido();
+                    actualizarResumen();
+                    cargarPedidos();
+                } else {
+                    mostrarMensaje(result.message || 'Error al guardar el pedido', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                mostrarMensaje('Error al guardar el pedido', 'error');
+            }
+        });
+
+        async function cargarPedidos() {
+            try {
+                const response = await fetch('api/api.php?action=obtener_pedidos');
+                const pedidos = await response.json();
+                const clientes = await fetch('api/api.php?action=obtener_clientes').then(r => r.json());
+
+                const list = document.getElementById('pedidosList');
+
+                if (pedidos.length === 0) {
+                    list.innerHTML = '<p style="text-align: center; color: #999;">No hay pedidos registrados</p>';
+                    return;
+                }
+
+                let html = '';
+                pedidos.slice(-10).reverse().forEach(pedido => {
+                    const cliente = clientes.find(c => c.id === pedido.cliente_id);
+                    const total = pedido.items.reduce((sum, item) => sum + item.subtotal, 0);
+                    const descuento = (total * pedido.descuento) / 100;
+                    const totalFinal = total - descuento;
+
+                    html += `
+                        <div class="cliente-item" style="margin-bottom: 15px;">
+                            <div class="cliente-info">
+                                <h4>${cliente ? cliente.nombre : 'Cliente desconocido'}</h4>
+                                <p><i class="fas fa-calendar"></i> ${new Date(pedido.fecha).toLocaleDateString('es-ES')}</p>
+                                <p><i class="fas fa-box"></i> ${pedido.items.length} producto(s)</p>
+                                <p style="color: #667eea; font-weight: bold;">Total: $${totalFinal.toFixed(2)}</p>
+                            </div>
+                            <button class="btn-danger" onclick="eliminarPedido('${pedido.id}')">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </button>
+                        </div>
+                    `;
+                });
+
+                list.innerHTML = html;
+            } catch (error) {
+                console.error('Error al cargar pedidos:', error);
+            }
+        }
+
+        async function eliminarPedido(pedidoId) {
+            if (!confirm('¿Está seguro de que desea eliminar este pedido?')) return;
+
+            try {
+                const response = await fetch('api/api.php?action=eliminar_pedido', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `pedido_id=${pedidoId}`
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    mostrarMensaje('Pedido eliminado correctamente', 'success');
+                    cargarPedidos();
+                } else {
+                    mostrarMensaje(result.message || 'Error al eliminar el pedido', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                mostrarMensaje('Error al eliminar el pedido', 'error');
+            }
+        }
+
+        function mostrarMensaje(mensaje, tipo) {
+            const element = document.getElementById('message');
+            element.textContent = mensaje;
+            element.className = `alert ${tipo}`;
+
+            if (tipo === 'success') {
+                setTimeout(() => {
+                    element.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // Monitorear cambios en cantidades
+        document.addEventListener('change', (e) => {
+            if (e.target.classList.contains('input-cantidad')) {
+                agregarProductos();
+            }
+        });
+    </script>
+</body>
+</html>

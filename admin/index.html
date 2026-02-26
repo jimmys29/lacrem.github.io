@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - La Crem</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+        }
+
+        .menu-card i {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .menu-card h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .menu-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .menu-card .badge-count {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .stat-card i {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-card h3 {
+            color: #999;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .stat-card .number {
+            color: #667eea;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 40px;
+        }
+
+        .footer p {
+            margin: 10px 0;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            color: white;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-box h3 {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-box p {
+            margin: 5px 0;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .menu-card {
+                padding: 25px;
+            }
+
+            .menu-card i {
+                font-size: 2.5em;
+            }
+
+            .menu-card h2 {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <i class="fas fa-ice-cream"></i> La Crem - Panel de Control
+            </h1>
+            <p>Gestiona tus clientes y pedidos</p>
+        </div>
+
+        <div class="info-box">
+            <h3><i class="fas fa-info-circle"></i> Bienvenido al Sistema de Gestión</h3>
+            <p>Este panel te permite administrar clientes, crear pedidos y ver reportes de ventas.</p>
+            <p><strong>Nota:</strong> Los datos se almacenan localmente. Cuando tengas acceso a una base de datos MySQL, podremos migrar toda la información.</p>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <i class="fas fa-users"></i>
+                <h3>Clientes</h3>
+                <div class="number" id="totalClientes">0</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>Pedidos</h3>
+                <div class="number" id="totalPedidos">0</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-box"></i>
+                <h3>Productos Vendidos</h3>
+                <div class="number" id="totalProductos">0</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-dollar-sign"></i>
+                <h3>Ingresos</h3>
+                <div class="number" id="totalVentas">$0.00</div>
+            </div>
+        </div>
+
+        <!-- Menu Principal -->
+        <div class="menu-grid">
+            <a href="clientes.html" class="menu-card">
+                <i class="fas fa-users"></i>
+                <h2>Gestionar Clientes</h2>
+                <p>Crea, edita y elimina clientes de tu base de datos.</p>
+                <div class="badge-count" id="badge-clientes">0 clientes</div>
+            </a>
+
+            <a href="pedidos.html" class="menu-card">
+                <i class="fas fa-shopping-cart"></i>
+                <h2>Crear Pedidos</h2>
+                <p>Registra nuevos pedidos y asócialos con clientes.</p>
+                <div class="badge-count" id="badge-pedidos">0 pedidos</div>
+            </a>
+
+            <a href="reportes.html" class="menu-card">
+                <i class="fas fa-chart-bar"></i>
+                <h2>Ver Reportes</h2>
+                <p>Visualiza análisis de ventas y productos por cliente.</p>
+                <div class="badge-count">Reportes</div>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p><i class="fas fa-lock"></i> Área Administrativa - La Crem</p>
+            <p>© 2024 La Crem | <a href="/">Ir a sitio principal</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarEstadisticas();
+        });
+
+        async function cargarEstadisticas() {
+            try {
+                const response_clientes = await fetch('api/api.php?action=obtener_clientes');
+                const clientes = await response_clientes.json();
+
+                const response_pedidos = await fetch('api/api.php?action=obtener_pedidos');
+                const pedidos = await response_pedidos.json();
+
+                const response_resumen = await fetch('api/api.php?action=obtener_resumen');
+                const resumen = await response_resumen.json();
+
+                let totalProductos = 0;
+                let totalVentas = 0;
+
+                resumen.forEach(item => {
+                    totalProductos += item.total_productos;
+                    totalVentas += item.total_ventas;
+                });
+
+                document.getElementById('totalClientes').textContent = clientes.length;
+                document.getElementById('totalPedidos').textContent = pedidos.length;
+                document.getElementById('totalProductos').textContent = totalProductos;
+                document.getElementById('totalVentas').textContent = `$${totalVentas.toFixed(2)}`;
+
+                document.getElementById('badge-clientes').textContent = `${clientes.length} ${clientes.length === 1 ? 'cliente' : 'clientes'}`;
+                document.getElementById('badge-pedidos').textContent = `${pedidos.length} ${pedidos.length === 1 ? 'pedido' : 'pedidos'}`;
+
+            } catch (error) {
+                console.error('Error al cargar estadísticas:', error);
+            }
+        }
+    </script>
+</body>
+</html>
