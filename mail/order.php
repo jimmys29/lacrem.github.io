@@ -15,8 +15,8 @@ $totals = $data['totals'];
 $discountCode = $data['discountCode'];
 
 // Configuration
-$sales_email = "ventas@lacrem"; // Update this to the actual domain if needed, e.g., ventas@lacrem.com
-$from_email = "no-reply@lacrem.com";
+$sales_email = "lacremheladeria@gmail.com"; // Email corporativo de La Crem para recibir notificaciones de pedidos
+$from_email = "noreply@lacrem.com"; // Email remitente del sistema
 
 // 1. Send Email to Customer (HTML Invoice)
 $to = $customer['email'];

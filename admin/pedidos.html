@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #F195B2 0%, #62C3E7 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -56,7 +56,7 @@
         }
 
         .card h2 {
-            color: #667eea;
+            color: #F195B2;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
@@ -92,11 +92,11 @@
         select:focus,
         textarea:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #F195B2;
         }
 
         button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #F195B2 0%, #62C3E7 100%);
             color: white;
             padding: 12px 25px;
             border: none;
@@ -110,7 +110,7 @@
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 20px rgba(241, 149, 178, 0.4);
         }
 
         .btn-secondary {
@@ -162,7 +162,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-left: 3px solid #667eea;
+            border-left: 3px solid #F195B2;
         }
 
         .item-info h4 {
@@ -205,8 +205,8 @@
         }
 
         .product-card:hover {
-            border-color: #667eea;
-            background: #f0f2ff;
+            border-color: #F195B2;
+            background: #fbeaf1;
         }
 
         .product-card h4 {
@@ -216,7 +216,7 @@
         }
 
         .product-card .precio {
-            color: #667eea;
+            color: #F195B2;
             font-weight: bold;
             margin-bottom: 8px;
         }
@@ -244,9 +244,9 @@
         .resumen-row.total {
             margin-top: 10px;
             padding-top: 10px;
-            border-top: 2px solid #667eea;
+            border-top: 2px solid #F195B2;
             font-weight: bold;
-            color: #667eea;
+            color: #F195B2;
             font-size: 1.1em;
         }
 
@@ -541,7 +541,7 @@
                                 <h4>${cliente ? cliente.nombre : 'Cliente desconocido'}</h4>
                                 <p><i class="fas fa-calendar"></i> ${new Date(pedido.fecha).toLocaleDateString('es-ES')}</p>
                                 <p><i class="fas fa-box"></i> ${pedido.items.length} producto(s)</p>
-                                <p style="color: #667eea; font-weight: bold;">Total: $${totalFinal.toFixed(2)}</p>
+                                <p style="color: #F195B2; font-weight: bold;">Total: $${totalFinal.toFixed(2)}</p>
                             </div>
                             <button class="btn-danger" onclick="eliminarPedido('${pedido.id}')">
                                 <i class="fas fa-trash"></i> Eliminar
