@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes Avanzados - La Crem</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .stat-card i {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-card h3 {
+            color: #999;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .stat-card .number {
+            color: #667eea;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .filtros {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .filtros-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+
+        .botones {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #138496;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f8f9fa;
+            border-bottom: 2px solid #667eea;
+        }
+
+        th {
+            padding: 12px;
+            text-align: left;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .numero {
+            text-align: center;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .monto {
+            text-align: right;
+            font-weight: 600;
+            color: #28a745;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .badge.oro {
+            background: #ffc107;
+            color: #000;
+        }
+
+        .badge.plata {
+            background: #6c757d;
+            color: white;
+        }
+
+        .badge.bronce {
+            background: #cd7f32;
+            color: white;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .loading i {
+            font-size: 3em;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .filtros-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .botones {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-chart-line"></i> Reportes Avanzados</h1>
+            <p>Análisis detallado de ventas con filtros personalizados</p>
+            <a href="index.html" style="color: white; text-decoration: none; margin-top: 10px; display: inline-block;">
+                <i class="fas fa-arrow-left"></i> Volver al panel
+            </a>
+        </div>
+
+        <!-- Filtros -->
+        <div class="card">
+            <h2><i class="fas fa-filter"></i> Filtros de Búsqueda</h2>
+            <div class="filtros">
+                <div class="filtros-grid">
+                    <div class="form-group">
+                        <label>Periodo Rápido</label>
+                        <select id="periodo">
+                            <option value="">Personalizado</option>
+                            <option value="diario">Hoy</option>
+                            <option value="semanal">Esta Semana</option>
+                            <option value="mensual" selected>Este Mes</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Fecha Inicio</label>
+                        <input type="date" id="fecha_inicio">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Fecha Fin</label>
+                        <input type="date" id="fecha_fin">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Vendedor</label>
+                        <select id="vendedor_id">
+                            <option value="">Todos los vendedores</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="botones">
+                    <button class="btn btn-primary" onclick="aplicarFiltros()">
+                        <i class="fas fa-search"></i> Buscar
+                    </button>
+                    <button class="btn btn-secondary" onclick="limpiarFiltros()">
+                        <i class="fas fa-eraser"></i> Limpiar
+                    </button>
+                    <button class="btn btn-success" onclick="exportar('csv')">
+                        <i class="fas fa-file-excel"></i> Exportar CSV
+                    </button>
+                    <button class="btn btn-info" onclick="exportar('json')">
+                        <i class="fas fa-file-code"></i> Exportar JSON
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estadísticas generales -->
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>Total Pedidos</h3>
+                <div class="number" id="totalPedidos">0</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-dollar-sign"></i>
+                <h3>Total Ventas</h3>
+                <div class="number" id="totalVentas">$0.00</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-box"></i>
+                <h3>Productos Vendidos</h3>
+                <div class="number" id="totalProductos">0</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-chart-bar"></i>
+                <h3>Promedio / Pedido</h3>
+                <div class="number" id="promedioPedido">$0.00</div>
+            </div>
+        </div>
+
+        <!-- Ventas por vendedor -->
+        <div class="card">
+            <h2><i class="fas fa-user-tie"></i> Ventas por Vendedor</h2>
+            <div id="ventasVendedorContainer">
+                <div class="loading">
+                    <i class="fas fa-spinner"></i>
+                    <p>Cargando datos...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Productos más vendidos -->
+        <div class="card">
+            <h2><i class="fas fa-trophy"></i> Productos Más Vendidos</h2>
+            <div id="productosContainer">
+                <div class="loading">
+                    <i class="fas fa-spinner"></i>
+                    <p>Cargando datos...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ventas por día -->
+        <div class="card">
+            <h2><i class="fas fa-calendar-alt"></i> Ventas por Día</h2>
+            <div id="ventasDiaContainer">
+                <div class="loading">
+                    <i class="fas fa-spinner"></i>
+                    <p>Cargando datos...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let reporteActual = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            verificarAutenticacion();
+            cargarVendedores();
+            setFechasDefault();
+            aplicarFiltros();
+        });
+
+        async function verificarAutenticacion() {
+            try {
+                const response = await fetch('api/api.php?action=check_auth');
+                const result = await response.json();
+                if (!result.authenticated) {
+                    window.location.href = 'login.html';
+                }
+            } catch (error) {
+                console.error('Error verificando autenticación:', error);
+            }
+        }
+
+        async function cargarVendedores() {
+            try {
+                const response = await fetch('api/api.php?action=obtener_usuarios');
+                const usuarios = await response.json();
+                
+                const select = document.getElementById('vendedor_id');
+                usuarios.forEach(u => {
+                    const option = document.createElement('option');
+                    option.value = u.id;
+                    option.textContent = u.nombre;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error cargando vendedores:', error);
+            }
+        }
+
+        function setFechasDefault() {
+            const hoy = new Date();
+            const primerDia = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+            
+            document.getElementById('fecha_inicio').value = primerDia.toISOString().split('T')[0];
+            document.getElementById('fecha_fin').value = hoy.toISOString().split('T')[0];
+        }
+
+        // Cambiar fechas automáticamente al seleccionar periodo
+        document.getElementById('periodo').addEventListener('change', (e) => {
+            const periodo = e.target.value;
+            const hoy = new Date();
+            
+            if (periodo === 'diario') {
+                document.getElementById('fecha_inicio').value = hoy.toISOString().split('T')[0];
+                document.getElementById('fecha_fin').value = hoy.toISOString().split('T')[0];
+            } else if (periodo === 'semanal') {
+                const lunes = new Date(hoy);
+                lunes.setDate(hoy.getDate() - hoy.getDay() + (hoy.getDay() === 0 ? -6 : 1));
+                document.getElementById('fecha_inicio').value = lunes.toISOString().split('T')[0];
+                document.getElementById('fecha_fin').value = hoy.toISOString().split('T')[0];
+            } else if (periodo === 'mensual') {
+                setFechasDefault();
+            }
+        });
+
+        async function aplicarFiltros() {
+            const filtros = {
+                periodo: document.getElementById('periodo').value,
+                fecha_inicio: document.getElementById('fecha_inicio').value,
+                fecha_fin: document.getElementById('fecha_fin').value,
+                vendedor_id: document.getElementById('vendedor_id').value
+            };
+
+            try {
+                const response = await fetch('api/api.php?action=obtener_reportes_avanzados', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(filtros)
+                });
+
+                reporteActual = await response.json();
+                mostrarReporte(reporteActual);
+            } catch (error) {
+                console.error('Error obteniendo reportes:', error);
+                alert('Error al cargar los reportes');
+            }
+        }
+
+        function mostrarReporte(datos) {
+            // Actualizar estadísticas
+            document.getElementById('totalPedidos').textContent = datos.resumen.total_pedidos;
+            document.getElementById('totalVentas').textContent = `$${datos.resumen.total_ventas.toFixed(2)}`;
+            document.getElementById('totalProductos').textContent = datos.resumen.total_productos;
+            document.getElementById('promedioPedido').textContent = `$${datos.resumen.promedio_por_pedido.toFixed(2)}`;
+
+            // Ventas por vendedor
+            if (datos.ventas_por_vendedor.length > 0) {
+                let html = '<table><thead><tr><th>Vendedor</th><th class="numero">Pedidos</th><th class="monto">Total Ventas</th></tr></thead><tbody>';
+                datos.ventas_por_vendedor.forEach((v, i) => {
+                    let badge = '';
+                    if (i === 0) badge = '<span class="badge oro">🥇 Top 1</span>';
+                    else if (i === 1) badge = '<span class="badge plata">🥈 Top 2</span>';
+                    else if (i === 2) badge = '<span class="badge bronce">🥉 Top 3</span>';
+                    
+                    html += `
+                        <tr>
+                            <td>${v.vendedor_nombre} ${badge}</td>
+                            <td class="numero">${v.cantidad_pedidos}</td>
+                            <td class="monto">$${v.total_ventas.toFixed(2)}</td>
+                        </tr>
+                    `;
+                });
+                html += '</tbody></table>';
+                document.getElementById('ventasVendedorContainer').innerHTML = html;
+            } else {
+                document.getElementById('ventasVendedorContainer').innerHTML = '<p style="text-align:center;color:#999;">No hay datos disponibles</p>';
+            }
+
+            // Productos más vendidos
+            if (datos.productos_mas_vendidos.length > 0) {
+                let html = '<table><thead><tr><th>Producto</th><th class="numero">Cantidad</th><th class="monto">Ventas</th></tr></thead><tbody>';
+                datos.productos_mas_vendidos.forEach(p => {
+                    html += `
+                        <tr>
+                            <td>${p.nombre}</td>
+                            <td class="numero">${p.cantidad}</td>
+                            <td class="monto">$${p.ventas.toFixed(2)}</td>
+                        </tr>
+                    `;
+                });
+                html += '</tbody></table>';
+                document.getElementById('productosContainer').innerHTML = html;
+            } else {
+                document.getElementById('productosContainer').innerHTML = '<p style="text-align:center;color:#999;">No hay datos disponibles</p>';
+            }
+
+            // Ventas por día
+            if (datos.ventas_por_dia.length > 0) {
+                let html = '<table><thead><tr><th>Fecha</th><th class="numero">Pedidos</th><th class="monto">Total</th></tr></thead><tbody>';
+                datos.ventas_por_dia.forEach(d => {
+                    const fecha = new Date(d.fecha).toLocaleDateString('es-ES', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});
+                    html += `
+                        <tr>
+                            <td>${fecha}</td>
+                            <td class="numero">${d.cantidad_pedidos}</td>
+                            <td class="monto">$${d.total_ventas.toFixed(2)}</td>
+                        </tr>
+                    `;
+                });
+                html += '</tbody></table>';
+                document.getElementById('ventasDiaContainer').innerHTML = html;
+            } else {
+                document.getElementById('ventasDiaContainer').innerHTML = '<p style="text-align:center;color:#999;">No hay datos disponibles</p>';
+            }
+        }
+
+        function limpiarFiltros() {
+            document.getElementById('periodo').value = 'mensual';
+            document.getElementById('vendedor_id').value = '';
+            setFechasDefault();
+            aplicarFiltros();
+        }
+
+        async function exportar(formato) {
+            if (!reporteActual) {
+                alert('No hay datos para exportar');
+                return;
+            }
+
+            const filtros = {
+                periodo: document.getElementById('periodo').value,
+                fecha_inicio: document.getElementById('fecha_inicio').value,
+                fecha_fin: document.getElementById('fecha_fin').value,
+                vendedor_id: document.getElementById('vendedor_id').value
+            };
+
+            try {
+                const response = await fetch(`api/api.php?action=exportar_reporte&formato=${formato}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(filtros)
+                });
+
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `reporte_ventas_${new Date().toISOString().split('T')[0]}.${formato}`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            } catch (error) {
+                console.error('Error exportando:', error);
+                alert('Error al exportar los datos');
+            }
+        }
+    </script>
+</body>
+</html>

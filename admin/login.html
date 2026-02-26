@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - La Crem Admin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo i {
+            font-size: 4em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .logo h1 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .logo p {
+            color: #999;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .info-box h4 {
+            color: #0066cc;
+            margin-bottom: 8px;
+        }
+
+        .info-box p {
+            color: #004d99;
+            margin: 3px 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .shake {
+            animation: shake 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <i class="fas fa-ice-cream"></i>
+            <h1>La Crem</h1>
+            <p>Panel de Administración</p>
+        </div>
+
+        <div id="message" class="alert"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="usuario">
+                    <i class="fas fa-user"></i> Usuario
+                </label>
+                <input type="text" id="usuario" name="usuario" required autocomplete="username" autofocus>
+            </div>
+
+            <div class="form-group">
+                <label for="password">
+                    <i class="fas fa-lock"></i> Contraseña
+                </label>
+                <input type="password" id="password" name="password" required autocomplete="current-password">
+            </div>
+
+            <button type="submit" id="btnLogin">
+                <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+            </button>
+        </form>
+
+        <div class="info-box">
+            <h4><i class="fas fa-info-circle"></i> Usuario Demo</h4>
+            <p><strong>Usuario:</strong> admin</p>
+            <p><strong>Contraseña:</strong> admin123</p>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2026 La Crem | <a href="/">Sitio Principal</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const usuario = document.getElementById('usuario').value;
+            const password = document.getElementById('password').value;
+            const btnLogin = document.getElementById('btnLogin');
+            const loginContainer = document.querySelector('.login-container');
+
+            btnLogin.disabled = true;
+            btnLogin.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Validando...';
+
+            try {
+                const response = await fetch('api/api.php?action=login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ usuario, password })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    mostrarMensaje('Login exitoso. Redirigiendo...', 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1000);
+                } else {
+                    mostrarMensaje(result.message || 'Error al iniciar sesión', 'error');
+                    loginContainer.classList.add('shake');
+                    setTimeout(() => {
+                        loginContainer.classList.remove('shake');
+                    }, 300);
+                    
+                    btnLogin.disabled = false;
+                    btnLogin.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar Sesión';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                mostrarMensaje('Error de conexión. Intenta nuevamente.', 'error');
+                
+                btnLogin.disabled = false;
+                btnLogin.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar Sesión';
+            }
+        });
+
+        function mostrarMensaje(mensaje, tipo) {
+            const element = document.getElementById('message');
+            element.textContent = mensaje;
+            element.className = `alert ${tipo}`;
+
+            if (tipo === 'success') {
+                setTimeout(() => {
+                    element.style.display = 'none';
+                }, 2000);
+            }
+        }
+
+        // Detectar Enter en los campos
+        document.getElementById('password').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+</body>
+</html>

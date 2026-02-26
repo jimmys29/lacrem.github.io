@@ -206,13 +206,20 @@
             <h1>
                 <i class="fas fa-ice-cream"></i> La Crem - Panel de Control
             </h1>
-            <p>Gestiona tus clientes y pedidos</p>
+            <p id="welcomeMsg">Gestiona tus clientes y pedidos</p>
+            <button onclick="cerrarSesion()" style="background: rgba(255,255,255,0.2); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </button>
         </div>
 
-        <div class="info-box">
-            <h3><i class="fas fa-info-circle"></i> Bienvenido al Sistema de Gestión</h3>
-            <p>Este panel te permite administrar clientes, crear pedidos y ver reportes de ventas.</p>
-            <p><strong>Nota:</strong> Los datos se almacenan localmente. Cuando tengas acceso a una base de datos MySQL, podremos migrar toda la información.</p>
+        <div class="info-box" id="infoAdmin" style="display: none;">
+            <h3><i class="fas fa-shield-alt"></i> Panel de Administración</h3>
+            <p>Tienes acceso completo al sistema. Puedes gestionar usuarios, ver todos los reportes y administrar todas las áreas.</p>
+        </div>
+
+        <div class="info-box" id="infoVendedor" style="display: none;">
+            <h3><i class="fas fa-info-circle"></i> Panel de Vendedor</h3>
+            <p>Puedes crear pedidos, gestionar clientes y ver tus reportes de ventas.</p>
         </div>
 
         <!-- Estadísticas -->
@@ -261,6 +268,20 @@
                 <p>Visualiza análisis de ventas y productos por cliente.</p>
                 <div class="badge-count">Reportes</div>
             </a>
+            
+            <a href="reportes_avanzados.html" class="menu-card">
+                <i class="fas fa-chart-line"></i>
+                <h2>Reportes Avanzados</h2>
+                <p>Filtros por fecha, vendedor y exportación de datos.</p>
+                <div class="badge-count">Análisis</div>
+            </a>
+            
+            <a href="vendedores.html" class="menu-card" id="menuVendedores" style="display: none;">
+                <i class="fas fa-user-tie"></i>
+                <h2>Gestionar Vendedores</h2>
+                <p>Administra usuarios y vendedores del sistema.</p>
+                <div class="badge-count" id="badge-vendedores">0 usuarios</div>
+            </a>
         </div>
 
         <div class="footer">
@@ -270,9 +291,53 @@
     </div>
 
     <script>
+        let currentUser = null;
+
         document.addEventListener('DOMContentLoaded', () => {
-            cargarEstadisticas();
+            verificarAutenticacion();
         });
+
+        async function verificarAutenticacion() {
+            try {
+                const response = await fetch('api/api.php?action=check_auth');
+                const result = await response.json();
+                
+                if (!result.authenticated) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+                
+                currentUser = result.user;
+                
+                // Actualizar mensaje de bienvenida
+                document.getElementById('welcomeMsg').textContent = `Bienvenido, ${currentUser.nombre}`;
+                
+                // Mostrar info según rol
+                if (currentUser.rol === 'admin') {
+                    document.getElementById('infoAdmin').style.display = 'block';
+                    document.getElementById('menuVendedores').style.display = 'block';
+                } else {
+                    document.getElementById('infoVendedor').style.display = 'block';
+                }
+                
+                // Cargar estadísticas
+                cargarEstadisticas();
+            } catch (error) {
+                console.error('Error verificando autenticación:', error);
+                window.location.href = 'login.html';
+            }
+        }
+
+        async function cerrarSesion() {
+            if (!confirm('¿Estás seguro de que deseas cerrar sesión?')) return;
+            
+            try {
+                await fetch('api/api.php?action=logout');
+                window.location.href = 'login.html';
+            } catch (error) {
+                console.error('Error cerrando sesión:', error);
+            }
+        }
 
         async function cargarEstadisticas() {
             try {
@@ -284,6 +349,9 @@
 
                 const response_resumen = await fetch('api/api.php?action=obtener_resumen');
                 const resumen = await response_resumen.json();
+                
+                const response_usuarios = await fetch('api/api.php?action=obtener_usuarios');
+                const usuarios = await response_usuarios.json();
 
                 let totalProductos = 0;
                 let totalVentas = 0;
@@ -300,6 +368,11 @@
 
                 document.getElementById('badge-clientes').textContent = `${clientes.length} ${clientes.length === 1 ? 'cliente' : 'clientes'}`;
                 document.getElementById('badge-pedidos').textContent = `${pedidos.length} ${pedidos.length === 1 ? 'pedido' : 'pedidos'}`;
+                
+                const badgeVendedores = document.getElementById('badge-vendedores');
+                if (badgeVendedores) {
+                    badgeVendedores.textContent = `${usuarios.length} ${usuarios.length === 1 ? 'usuario' : 'usuarios'}`;
+                }
 
             } catch (error) {
                 console.error('Error al cargar estadísticas:', error);

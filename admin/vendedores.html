@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Clientes - La Crem</title>
+    <title>Gestión de Vendedores - La Crem</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -76,10 +76,8 @@
 
         input[type="text"],
         input[type="email"],
-        input[type="phone"],
-        input[type="date"],
-        select,
-        textarea {
+        input[type="password"],
+        select {
             width: 100%;
             padding: 12px;
             border: 2px solid #e0e0e0;
@@ -90,15 +88,9 @@
         }
 
         input:focus,
-        select:focus,
-        textarea:focus {
+        select:focus {
             outline: none;
             border-color: #667eea;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 80px;
         }
 
         button {
@@ -133,8 +125,20 @@
             background: #6c757d;
         }
 
-        .btn-danger {
+        .btn-edit {
+            background: #17a2b8;
+            width: auto;
+            padding: 8px 12px;
+            font-size: 0.85em;
+            margin-left: 5px;
+        }
+
+        .btn-delete {
             background: #dc3545;
+            width: auto;
+            padding: 8px 12px;
+            font-size: 0.85em;
+            margin-left: 5px;
         }
 
         .alert {
@@ -158,12 +162,12 @@
             display: block;
         }
 
-        .clientes-list {
+        .usuarios-list {
             max-height: 500px;
             overflow-y: auto;
         }
 
-        .cliente-item {
+        .usuario-item {
             background: #f8f9fa;
             padding: 15px;
             border-radius: 5px;
@@ -174,65 +178,65 @@
             align-items: center;
         }
 
-        .cliente-info h4 {
+        .usuario-item.inactivo {
+            opacity: 0.6;
+            border-left-color: #dc3545;
+        }
+
+        .usuario-info h4 {
             color: #333;
             margin-bottom: 5px;
         }
 
-        .cliente-info p {
+        .usuario-info p {
             color: #666;
             font-size: 0.9em;
             margin: 3px 0;
         }
 
-        .btn-edit,
-        .btn-delete {
-            padding: 8px 12px;
-            font-size: 0.85em;
-            margin-left: 5px;
-            width: auto;
+        .badge {
             display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-left: 5px;
         }
 
-        .btn-edit {
+        .badge.admin {
+            background: #ffc107;
+            color: #000;
+        }
+
+        .badge.vendedor {
             background: #17a2b8;
+            color: white;
         }
 
-        .btn-delete {
+        .badge.inactivo {
             background: #dc3545;
-        }
-
-        .pagination {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .pagination button {
-            width: auto;
-            padding: 8px 15px;
+            color: white;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1><i class="fas fa-users"></i> Gestión de Clientes</h1>
-            <p>Administra los clientes y sus pedidos</p>
+            <h1><i class="fas fa-user-tie"></i> Gestión de Vendedores</h1>
+            <p>Administra usuarios y vendedores del sistema</p>
             <a href="index.html" style="color: white; text-decoration: none; margin-top: 10px; display: inline-block;">
                 <i class="fas fa-arrow-left"></i> Volver al panel
             </a>
         </div>
 
         <div class="content">
-            <!-- Formulario para crear/editar cliente -->
+            <!-- Formulario para crear/editar usuario -->
             <div class="card">
-                <h2 id="formTitle"><i class="fas fa-user-plus"></i> Crear Nuevo Cliente</h2>
+                <h2 id="formTitle"><i class="fas fa-user-plus"></i> Crear Nuevo Usuario</h2>
                 <div id="message" class="alert"></div>
 
-                <form id="formCliente">
-                    <input type="hidden" id="cliente_id" name="cliente_id">
+                <form id="formUsuario">
+                    <input type="hidden" id="usuario_id" name="usuario_id">
                     
                     <div class="form-group">
                         <label for="nombre">Nombre Completo *</label>
@@ -245,28 +249,35 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="telefono">Teléfono *</label>
-                        <input type="text" id="telefono" name="telefono" required>
+                        <label for="usuario">Usuario *</label>
+                        <input type="text" id="usuario" name="usuario" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="direccion">Dirección</label>
-                        <textarea id="direccion" name="direccion" placeholder="Calle, número, ciudad..."></textarea>
+                        <label for="password">Contraseña <span id="passwordLabel">*</span></label>
+                        <input type="password" id="password" name="password">
+                        <small style="color: #666;">Mínimo 6 caracteres</small>
                     </div>
 
                     <div class="form-group">
-                        <label for="empresa">Empresa/Negocio</label>
-                        <input type="text" id="empresa" name="empresa" placeholder="Opcional">
+                        <label for="rol">Rol *</label>
+                        <select id="rol" name="rol" required>
+                            <option value="vendedor">Vendedor</option>
+                            <option value="admin">Administrador</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="notas">Notas</label>
-                        <textarea id="notas" name="notas" placeholder="Información adicional..."></textarea>
+                        <label for="activo">Estado *</label>
+                        <select id="activo" name="activo" required>
+                            <option value="true">Activo</option>
+                            <option value="false">Inactivo</option>
+                        </select>
                     </div>
 
                     <div class="button-group">
                         <button type="submit">
-                            <i class="fas fa-save"></i> <span id="btnText">Guardar Cliente</span>
+                            <i class="fas fa-save"></i> <span id="btnText">Guardar Usuario</span>
                         </button>
                         <button type="button" class="btn-secondary" id="btnCancelar" style="display: none;" onclick="cancelarEdicion()">
                             <i class="fas fa-times"></i> Cancelar
@@ -275,23 +286,23 @@
                 </form>
             </div>
 
-            <!-- Lista de clientes -->
+            <!-- Lista de usuarios -->
             <div class="card">
-                <h2><i class="fas fa-list"></i> Clientes Registrados</h2>
-                <div class="clientes-list" id="clientesList">
-                    <p style="text-align: center; color: #999;">Cargando clientes...</p>
+                <h2><i class="fas fa-list"></i> Usuarios Registrados</h2>
+                <div class="usuarios-list" id="usuariosList">
+                    <p style="text-align: center; color: #999;">Cargando usuarios...</p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        let clienteEditando = null;
+        let usuarioEditando = null;
 
-        // Cargar clientes al iniciar
+        // Cargar usuarios al iniciar
         document.addEventListener('DOMContentLoaded', () => {
             verificarAutenticacion();
-            cargarClientes();
+            cargarUsuarios();
         });
 
         async function verificarAutenticacion() {
@@ -300,153 +311,185 @@
                 const result = await response.json();
                 if (!result.authenticated) {
                     window.location.href = 'login.html';
+                    return;
+                }
+                
+                // Verificar si es admin
+                if (result.user.rol !== 'admin') {
+                    alert('No tienes permisos para acceder a esta página');
+                    window.location.href = 'index.html';
                 }
             } catch (error) {
                 console.error('Error verificando autenticación:', error);
+                window.location.href = 'login.html';
             }
         }
 
         // Enviar formulario
-        document.getElementById('formCliente').addEventListener('submit', async (e) => {
+        document.getElementById('formUsuario').addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const cliente = {
+            const usuario_id = document.getElementById('usuario_id').value;
+            const password = document.getElementById('password').value;
+
+            // Validar contraseña solo si se está creando o si se cambió
+            if (!usuario_id && (!password || password.length < 6)) {
+                mostrarMensaje('La contraseña debe tener al menos 6 caracteres', 'error');
+                return;
+            }
+
+            const usuario = {
                 nombre: document.getElementById('nombre').value,
                 email: document.getElementById('email').value,
-                telefono: document.getElementById('telefono').value,
-                direccion: document.getElementById('direccion').value,
-                empresa: document.getElementById('empresa').value,
-                notas: document.getElementById('notas').value
+                usuario: document.getElementById('usuario').value,
+                rol: document.getElementById('rol').value,
+                activo: document.getElementById('activo').value === 'true'
             };
 
+            // Solo incluir password si se proporcionó
+            if (password) {
+                usuario.password = password;
+            }
+
             // Si estamos editando, agregar el ID
-            const cliente_id = document.getElementById('cliente_id').value;
-            if (cliente_id) {
-                cliente.id = cliente_id;
+            if (usuario_id) {
+                usuario.id = usuario_id;
             }
 
             try {
-                const response = await fetch('api/api.php?action=guardar_cliente', {
+                const action = usuario_id ? 'actualizar_usuario' : 'crear_usuario';
+                const response = await fetch(`api/api.php?action=${action}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(cliente)
+                    body: JSON.stringify(usuario)
                 });
 
                 const result = await response.json();
 
                 if (result.success) {
-                    mostrarMensaje(cliente_id ? 'Cliente actualizado correctamente' : 'Cliente guardado correctamente', 'success');
+                    mostrarMensaje(usuario_id ? 'Usuario actualizado correctamente' : 'Usuario creado correctamente', 'success');
                     cancelarEdicion();
-                    cargarClientes();
+                    cargarUsuarios();
                 } else {
-                    mostrarMensaje(result.message || 'Error al guardar el cliente', 'error');
+                    mostrarMensaje(result.message || 'Error al guardar el usuario', 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                mostrarMensaje('Error al guardar el cliente', 'error');
+                mostrarMensaje('Error al guardar el usuario', 'error');
             }
         });
 
-        async function cargarClientes() {
+        async function cargarUsuarios() {
             try {
-                const response = await fetch('api/api.php?action=obtener_clientes');
-                const clientes = await response.json();
+                const response = await fetch('api/api.php?action=obtener_usuarios');
+                const usuarios = await response.json();
 
-                const clientesList = document.getElementById('clientesList');
+                const usuariosList = document.getElementById('usuariosList');
 
-                if (clientes.length === 0) {
-                    clientesList.innerHTML = '<p style="text-align: center; color: #999;">No hay clientes registrados</p>';
+                if (usuarios.length === 0) {
+                    usuariosList.innerHTML = '<p style="text-align: center; color: #999;">No hay usuarios registrados</p>';
                     return;
                 }
 
                 let html = '';
-                clientes.forEach(cliente => {
+                usuarios.forEach(usuario => {
+                    const inactivo = !usuario.activo ? 'inactivo' : '';
                     html += `
-                        <div class="cliente-item">
-                            <div class="cliente-info">
-                                <h4>${cliente.nombre}</h4>
-                                <p><i class="fas fa-envelope"></i> ${cliente.email}</p>
-                                <p><i class="fas fa-phone"></i> ${cliente.telefono}</p>
-                                ${cliente.empresa ? `<p><i class="fas fa-building"></i> ${cliente.empresa}</p>` : ''}
+                        <div class="usuario-item ${inactivo}">
+                            <div class="usuario-info">
+                                <h4>
+                                    ${usuario.nombre}
+                                    <span class="badge ${usuario.rol}">${usuario.rol === 'admin' ? 'Admin' : 'Vendedor'}</span>
+                                    ${!usuario.activo ? '<span class="badge inactivo">Inactivo</span>' : ''}
+                                </h4>
+                                <p><i class="fas fa-user"></i> Usuario: ${usuario.usuario}</p>
+                                <p><i class="fas fa-envelope"></i> ${usuario.email}</p>
+                                <p><i class="fas fa-calendar"></i> Creado: ${new Date(usuario.fecha_creacion).toLocaleDateString()}</p>
                             </div>
                             <div>
-                                <button class="btn-edit" onclick='editarCliente(${JSON.stringify(cliente)})'>
+                                <button class="btn-edit" onclick='editarUsuario(${JSON.stringify(usuario).replace(/'/g, "\\'")})'>
                                     <i class="fas fa-edit"></i> Editar
                                 </button>
-                                <button class="btn-delete" onclick="eliminarCliente('${cliente.id}', '${cliente.nombre.replace(/'/g, "\\'")}')">
+                                ${usuario.id !== 'admin_001' ? `
+                                <button class="btn-delete" onclick="eliminarUsuario('${usuario.id}', '${usuario.nombre.replace(/'/g, "\\'")}')">
                                     <i class="fas fa-trash"></i> Eliminar
                                 </button>
+                                ` : ''}
                             </div>
                         </div>
                     `;
                 });
 
-                clientesList.innerHTML = html;
+                usuariosList.innerHTML = html;
             } catch (error) {
-                console.error('Error al cargar clientes:', error);
-                document.getElementById('clientesList').innerHTML = '<p style="color: red;">Error al cargar los clientes</p>';
+                console.error('Error al cargar usuarios:', error);
+                document.getElementById('usuariosList').innerHTML = '<p style="color: red;">Error al cargar los usuarios</p>';
             }
         }
 
-        function editarCliente(cliente) {
-            clienteEditando = cliente;
+        function editarUsuario(usuario) {
+            usuarioEditando = usuario;
             
             // Cambiar título del formulario
-            document.getElementById('formTitle').innerHTML = '<i class="fas fa-edit"></i> Editar Cliente';
-            document.getElementById('btnText').textContent = 'Actualizar Cliente';
+            document.getElementById('formTitle').innerHTML = '<i class="fas fa-edit"></i> Editar Usuario';
+            document.getElementById('btnText').textContent = 'Actualizar Usuario';
             document.getElementById('btnCancelar').style.display = 'block';
+            document.getElementById('passwordLabel').textContent = '(dejar en blanco para no cambiar)';
             
             // Rellenar formulario
-            document.getElementById('cliente_id').value = cliente.id;
-            document.getElementById('nombre').value = cliente.nombre;
-            document.getElementById('email').value = cliente.email;
-            document.getElementById('telefono').value = cliente.telefono;
-            document.getElementById('direccion').value = cliente.direccion || '';
-            document.getElementById('empresa').value = cliente.empresa || '';
-            document.getElementById('notas').value = cliente.notas || '';
+            document.getElementById('usuario_id').value = usuario.id;
+            document.getElementById('nombre').value = usuario.nombre;
+            document.getElementById('email').value = usuario.email;
+            document.getElementById('usuario').value = usuario.usuario;
+            document.getElementById('password').value = '';
+            document.getElementById('password').removeAttribute('required');
+            document.getElementById('rol').value = usuario.rol;
+            document.getElementById('activo').value = usuario.activo ? 'true' : 'false';
             
             // Scroll al formulario
             document.querySelector('.content').scrollIntoView({ behavior: 'smooth' });
         }
 
         function cancelarEdicion() {
-            clienteEditando = null;
+            usuarioEditando = null;
             
             // Restaurar título del formulario
-            document.getElementById('formTitle').innerHTML = '<i class="fas fa-user-plus"></i> Crear Nuevo Cliente';
-            document.getElementById('btnText').textContent = 'Guardar Cliente';
+            document.getElementById('formTitle').innerHTML = '<i class="fas fa-user-plus"></i> Crear Nuevo Usuario';
+            document.getElementById('btnText').textContent = 'Guardar Usuario';
             document.getElementById('btnCancelar').style.display = 'none';
+            document.getElementById('passwordLabel').textContent = '*';
             
             // Limpiar formulario
-            document.getElementById('formCliente').reset();
-            document.getElementById('cliente_id').value = '';
+            document.getElementById('formUsuario').reset();
+            document.getElementById('usuario_id').value = '';
+            document.getElementById('password').setAttribute('required', 'required');
         }
 
-        async function eliminarCliente(clienteId, nombre) {
-            if (!confirm(`¿Está seguro de que desea eliminar a ${nombre}?`)) return;
+        async function eliminarUsuario(usuarioId, nombre) {
+            if (!confirm(`¿Está seguro de que desea eliminar al usuario ${nombre}?`)) return;
 
             try {
-                const response = await fetch('api/api.php?action=eliminar_cliente', {
+                const response = await fetch('api/api.php?action=eliminar_usuario', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
-                    body: `cliente_id=${clienteId}`
+                    body: `id=${usuarioId}`
                 });
 
                 const result = await response.json();
 
                 if (result.success) {
-                    mostrarMensaje('Cliente eliminado correctamente', 'success');
-                    cargarClientes();
+                    mostrarMensaje('Usuario eliminado correctamente', 'success');
+                    cargarUsuarios();
                 } else {
-                    mostrarMensaje(result.message || 'Error al eliminar el cliente', 'error');
+                    mostrarMensaje(result.message || 'Error al eliminar el usuario', 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                mostrarMensaje('Error al eliminar el cliente', 'error');
+                mostrarMensaje('Error al eliminar el usuario', 'error');
             }
         }
 
