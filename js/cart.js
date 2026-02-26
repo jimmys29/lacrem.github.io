@@ -180,6 +180,55 @@
             $subtotal.text('$' + totals.subtotal.toLocaleString());
             $discount.text('-$' + totals.discountAmount.toLocaleString());
             $total.text('$' + totals.total.toLocaleString());
+        },
+
+        routeToPayment: function (paymentMethod) {
+            const paymentRoutes = {
+                'Efectivo': {
+                    title: 'Pedido Confirmado',
+                    message: '¡Tu pedido ha sido recibido correctamente!\n\nNuestro equipo se pondrá en contacto contigo pronto para coordinar la entrega.\n\nGracias por tu compra en La Crem.',
+                    redirect: null
+                },
+                'Transferencia': {
+                    title: 'Redirigiendo a PSE',
+                    message: 'Te estamos redirigiendo a PSE para completar tu pago...',
+                    redirect: 'https://www.pse.com.co/'
+                },
+                'Nequi': {
+                    title: 'Redirigiendo a Nequi',
+                    message: 'Te estamos redirigiendo a Nequi para completar tu pago...',
+                    redirect: 'https://www.nequi.com.co/'
+                },
+                'Daviplata': {
+                    title: 'Redirigiendo a Daviplata',
+                    message: 'Te estamos redirigiendo a Daviplata para completar tu pago...',
+                    redirect: 'https://www.daviplata.com/'
+                },
+                'Tarjeta de Credito': {
+                    title: 'Redirigiendo al Pago',
+                    message: 'Te estamos redirigiendo a la pasarela de pago segura...',
+                    redirect: 'https://payment.example.com/' // Reemplazar con pasarela real
+                }
+            };
+
+            const route = paymentRoutes[paymentMethod];
+
+            if (route) {
+                alert(route.message);
+                
+                // Clear cart after confirmation
+                this.clear();
+
+                // Redirect if applicable
+                if (route.redirect) {
+                    window.location.href = route.redirect;
+                } else {
+                    // Redirect to home after cash payment
+                    setTimeout(() => {
+                        window.location.href = './index.html';
+                    }, 2000);
+                }
+            }
         }
     };
 
@@ -249,16 +298,58 @@
             if (code) Cart.applyDiscount(code);
         });
 
-        // Bind Checkout Form (Simplified)
+        // Bind Checkout Form
         $('#checkout-form').submit(function (e) {
             e.preventDefault();
             if (Cart.items.length === 0) {
                 alert("No hay productos en el carrito.");
                 return;
             }
-            // Add checkout logic here...
-            alert("¡Pedido recibido! (Simulación)");
-            Cart.clear();
+
+            // Get form data
+            const formData = {
+                name: $('input[name="name"]').val(),
+                email: $('input[name="email"]').val(),
+                phone: $('input[name="phone"]').val(),
+                address: $('input[name="address"]').val(),
+                payment_method: $('select[name="payment_method"]').val()
+            };
+
+            // Validate form
+            if (!formData.name || !formData.email || !formData.phone || !formData.address) {
+                alert("Por favor completa todos los campos.");
+                return;
+            }
+
+            // Prepare order data
+            const orderData = {
+                customer: formData,
+                items: Cart.items,
+                totals: Cart.calculateTotals(),
+                discountCode: Cart.discountCode
+            };
+
+            // Send order to server
+            fetch('./mail/order.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.status === 'success') {
+                    // Route to payment method
+                    Cart.routeToPayment(formData.payment_method);
+                } else {
+                    alert("Error al procesar el pedido. Por favor intenta de nuevo.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Error al procesar el pedido. Por favor intenta de nuevo.");
+            });
         });
     });
 
